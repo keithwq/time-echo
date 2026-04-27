@@ -698,8 +698,8 @@ export default function InterviewPage() {
     return (
       <div key={followupQuestion.id} className="border border-ink-wash rounded-sm bg-paper-deep p-5 space-y-4">
         <div className="space-y-2">
-          <p className="text-base text-ink-medium font-serif">关于“{parentOption.label}”</p>
-          <h3 className="text-xl font-serif text-ink-heavy leading-relaxed">{followupQuestion.content}</h3>
+          <p className="text-base text-ink-medium">关于“{parentOption.label}”</p>
+          <h3 className="text-xl text-ink-heavy leading-relaxed">{followupQuestion.content}</h3>
         </div>
 
         {followupQuestion.answerMode === 'text' ? (
@@ -708,11 +708,11 @@ export default function InterviewPage() {
             onChange={(event) => handleFollowupTextChange(followupQuestion.id, 'textAnswer', event.target.value)}
             placeholder="您可以慢慢写，我会继续接着听。"
             maxLength={1000}
-            className="w-full min-h-[160px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none px-2 py-3"
+            className="w-full min-h-[160px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none px-2 py-4"
           />
         ) : (
           <div className="space-y-4">
-            <div className="space-y-3">
+            <div className="space-y-4">
               {(followupQuestion.options || []).map((option) => {
                 const isSelected = draft.selectedOptions.includes(option.value);
 
@@ -724,8 +724,8 @@ export default function InterviewPage() {
                     aria-pressed={isSelected}
                     className={
                       isSelected
-                        ? 'w-full min-h-[56px] px-4 py-3 border-2 border-ink-heavy bg-paper-base text-ink-heavy text-lg font-serif text-left rounded-sm'
-                        : 'w-full min-h-[56px] px-4 py-3 border border-ink-wash bg-paper-base text-ink-medium text-lg font-serif text-left rounded-sm active:bg-paper-deep'
+                        ? 'w-full min-h-[56px] px-4 py-4 border-2 border-ink-heavy bg-paper-base text-ink-heavy text-lg text-left rounded-sm'
+                        : 'w-full min-h-[56px] px-4 py-4 border border-ink-wash bg-paper-base text-ink-medium text-lg text-left rounded-sm active:bg-paper-deep'
                     }
                   >
                     {option.label}
@@ -742,7 +742,7 @@ export default function InterviewPage() {
                 }
                 placeholder="把这一项具体说给我听听。"
                 maxLength={500}
-                className="w-full min-h-[140px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none px-2 py-3"
+                className="w-full min-h-[140px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none px-2 py-4"
               />
             )}
           </div>
@@ -754,7 +754,7 @@ export default function InterviewPage() {
   if (loading) {
     return (
       <div className="min-h-dvh bg-paper-base flex items-center justify-center">
-        <p className="text-lg text-ink-medium font-serif">正在准备访谈...</p>
+        <p className="text-lg text-ink-medium">正在准备访谈...</p>
       </div>
     );
   }
@@ -763,7 +763,7 @@ export default function InterviewPage() {
     return (
       <div className="min-h-dvh bg-paper-base flex flex-col">
         <header className="px-6 py-4 border-b border-ink-wash">
-          <h1 className="text-xl font-serif text-ink-heavy">时光回响 · 访谈</h1>
+          <h1 className="text-xl text-ink-heavy">时光回响 · 访谈</h1>
         </header>
 
         <main className="flex-1 px-6 py-8 flex items-center justify-center">
@@ -775,9 +775,9 @@ export default function InterviewPage() {
             className="w-full max-w-xl"
           >
             <div className="space-y-6">
-              <div className="space-y-3">
-                <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">我们先记下怎么称呼您</h2>
-                <p className="text-lg text-ink-medium leading-loose">
+              <div className="space-y-4">
+                <h2 className="text-2xl text-ink-heavy leading-relaxed">我们先记下怎么称呼您</h2>
+                <p className="text-lg text-ink-medium leading-relaxed">
                   请告诉我您的名字和年龄，这样访谈会更贴切一些。
                 </p>
               </div>
@@ -790,7 +790,7 @@ export default function InterviewPage() {
                   onChange={(event) => setNameInput(event.target.value)}
                   placeholder="请输入您的名字"
                   maxLength={50}
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
                 />
               </label>
 
@@ -803,14 +803,14 @@ export default function InterviewPage() {
                   placeholder="请输入您的年龄"
                   min="1"
                   max="120"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
                 />
               </label>
 
               <button
                 type="submit"
                 disabled={creatingSession}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
               >
                 {creatingSession ? '正在开启访谈...' : '开始访谈'}
               </button>
@@ -837,7 +837,7 @@ export default function InterviewPage() {
   return (
     <div className="min-h-dvh bg-paper-base flex flex-col">
       <header className="px-6 py-4 border-b border-ink-wash">
-        <h1 className="text-xl font-serif text-ink-heavy">时光回响 · 访谈</h1>
+        <h1 className="text-xl text-ink-heavy">时光回响 · 访谈</h1>
       </header>
 
       <main className="flex-1 px-6 py-8 overflow-y-auto">
@@ -847,7 +847,7 @@ export default function InterviewPage() {
               <div className="flex justify-center">
                 <div className="w-12 h-12 border-4 border-ink-wash rounded-full animate-pulse"></div>
               </div>
-              <p className="text-lg text-ink-medium font-serif">正在为您准备第一个问题...</p>
+              <p className="text-lg text-ink-medium">正在为您准备第一个问题...</p>
             </div>
             <button
               type="button"
@@ -856,7 +856,7 @@ export default function InterviewPage() {
                   void loadCurrentQuestion(sessionId, userId);
                 }
               }}
-              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm"
+              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm"
             >
               重新加载
             </button>
@@ -864,13 +864,13 @@ export default function InterviewPage() {
         )}
 
         {currentQuestion && !isSpecialActionQuestion(currentQuestion) && (
-          <div className="text-center py-2 text-ink-medium text-base">
+          <div className="text-center py-4 text-ink-medium text-base">
             第 {currentQuestion.baseSlotsUsed || 0} 题 / 共 {currentQuestion.baseSlotsTotal || 50} 题
           </div>
         )}
 
         {currentQuestion && !isSpecialActionQuestion(currentQuestion) && (
-          <div className="bg-paper-deep border-l-4 border-seal-red px-4 py-3 text-ink-medium text-base rounded-sm mb-6">
+          <div className="bg-paper-deep border-l-4 border-seal-red px-4 py-4 text-ink-medium text-base rounded-sm mb-6">
             💡 一次性打不完没关系，系统将自动记录您的回答
           </div>
         )}
@@ -878,8 +878,8 @@ export default function InterviewPage() {
         {currentQuestion && specialActionQuestion && (
           <div className="max-w-2xl mx-auto space-y-6">
             <div className="border-2 border-seal-red rounded-sm p-6 bg-paper-deep">
-              <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed mb-4">{currentQuestion.content}</h2>
-              <p className="text-lg text-ink-medium leading-loose">
+              <h2 className="text-2xl text-ink-heavy leading-relaxed mb-4">{currentQuestion.content}</h2>
+              <p className="text-lg text-ink-medium leading-relaxed">
                 现在可以先整理成一版给您看看，不用再被题目卡住。
               </p>
             </div>
@@ -889,7 +889,7 @@ export default function InterviewPage() {
                 type="button"
                 onClick={() => void handleGeneratePreview()}
                 disabled={generatingPreview}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
               >
                 {generatingPreview ? '正在整理当前版本...' : '生成当前版本'}
               </button>
@@ -897,7 +897,7 @@ export default function InterviewPage() {
               <button
                 type="button"
                 onClick={() => void router.push('/')}
-                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep"
+                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm active:bg-paper-deep"
               >
                 先回首页
               </button>
@@ -909,14 +909,14 @@ export default function InterviewPage() {
           <div className="max-w-2xl mx-auto space-y-6">
             {currentQuestion.shouldSuggestPreview && (
               <div className="border-2 border-seal-red rounded-sm p-4 bg-paper-deep">
-                <p className="text-lg text-ink-heavy font-serif leading-loose mb-4">
+                <p className="text-lg text-ink-heavy leading-relaxed mb-4">
                   已经可以先整理成一版给您看看了。
                 </p>
                 <button
                   type="button"
                   onClick={() => void handleGeneratePreview()}
                   disabled={generatingPreview}
-                  className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                  className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
                 >
                   {generatingPreview ? '正在整理当前版本...' : '生成当前版本'}
                 </button>
@@ -924,19 +924,19 @@ export default function InterviewPage() {
             )}
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">{currentQuestion.content}</h2>
+              <h2 className="text-2xl text-ink-heavy leading-relaxed">{currentQuestion.content}</h2>
 
               {currentQuestion.hint && (
-                <p className="text-lg text-ink-medium leading-loose">{currentQuestion.hint}</p>
+                <p className="text-lg text-ink-medium leading-relaxed">{currentQuestion.hint}</p>
               )}
 
               {remainingSkips !== null && !currentQuestion.isOptional && remainingSkips > 0 && (
-                <p className="text-base text-ink-medium font-serif">还可跳过 {remainingSkips} 次</p>
+                <p className="text-lg text-ink-medium">还可跳过 {remainingSkips} 次</p>
               )}
             </section>
 
             {currentQuestion.options && currentQuestion.options.length > 0 && (
-              <section className="space-y-3">
+              <section className="space-y-4">
                 {currentQuestion.options.map((option) => {
                   const isSelected = selectedOptions.includes(option.value);
 
@@ -948,8 +948,8 @@ export default function InterviewPage() {
                       aria-pressed={isSelected}
                       className={
                         isSelected
-                          ? 'w-full min-h-[56px] px-4 py-3 border-2 border-ink-heavy bg-paper-deep text-ink-heavy text-lg font-serif text-left rounded-sm'
-                          : 'w-full min-h-[56px] px-4 py-3 border border-ink-wash bg-paper-base text-ink-medium text-lg font-serif text-left rounded-sm active:bg-paper-deep'
+                          ? 'w-full min-h-[56px] px-4 py-4 border-2 border-ink-heavy bg-paper-deep text-ink-heavy text-lg text-left rounded-sm'
+                          : 'w-full min-h-[56px] px-4 py-4 border border-ink-wash bg-paper-base text-ink-medium text-lg text-left rounded-sm active:bg-paper-deep'
                       }
                     >
                       {option.label}
@@ -960,7 +960,7 @@ export default function InterviewPage() {
             )}
 
             {showMainDetailInput && (
-              <section className="space-y-3">
+              <section className="space-y-4">
                 <label className="block">
                   <span className="sr-only">补充说明</span>
                   <textarea
@@ -970,14 +970,14 @@ export default function InterviewPage() {
                       mainNeedsCustomInput ? '把刚才选的这一项具体说给我听听。' : '如果您愿意，也可以再补充几句细节。'
                     }
                     maxLength={1000}
-                    className="w-full min-h-[180px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none px-2 py-3"
+                    className="w-full min-h-[180px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none px-2 py-4"
                   />
                 </label>
               </section>
             )}
 
             {currentQuestion.answerMode === 'text' && (
-              <section className="space-y-3">
+              <section className="space-y-4">
                 <label className="block">
                   <span className="sr-only">您的回答</span>
                   <textarea
@@ -985,7 +985,7 @@ export default function InterviewPage() {
                     onChange={(event) => setTextAnswer(event.target.value)}
                     placeholder="您可以慢慢写，我会继续接着听。"
                     maxLength={1000}
-                    className="w-full min-h-[220px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none px-2 py-3"
+                    className="w-full min-h-[220px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none px-2 py-4"
                   />
                 </label>
               </section>
@@ -994,9 +994,9 @@ export default function InterviewPage() {
             {activeFollowups.length > 0 && (
               <section className="space-y-4">
                 <div className="space-y-2">
-                  <h3 className="text-xl font-serif text-ink-heavy">我想顺着刚才这项再多问您一句</h3>
+                  <h3 className="text-xl text-ink-heavy">我想顺着刚才这项再多问您一句</h3>
                   {!followupsComplete && (
-                    <p className="text-base text-ink-medium font-serif">把下面这几句也选完，我们就继续。</p>
+                    <p className="text-base text-ink-medium">把下面这几句也选完，我们就继续。</p>
                   )}
                 </div>
 
@@ -1009,7 +1009,7 @@ export default function InterviewPage() {
                 <button
                   type="button"
                   onClick={() => void handleGoBack()}
-                  className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep"
+                  className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm active:bg-paper-deep"
                 >
                   ← 返回上一题
                 </button>
@@ -1019,7 +1019,7 @@ export default function InterviewPage() {
                 type="button"
                 onClick={() => void handleSubmitAnswer()}
                 disabled={!canSubmitCurrentQuestion || submitting || skipping}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
               >
                 {submitting ? '保存中...' : '保存并继续'}
               </button>
@@ -1029,7 +1029,7 @@ export default function InterviewPage() {
                   type="button"
                   onClick={() => void handleSkipQuestion()}
                   disabled={submitting || skipping}
-                  className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep disabled:border-ink-wash disabled:text-ink-wash disabled:cursor-not-allowed"
+                  className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm active:bg-paper-deep disabled:border-ink-wash disabled:text-ink-wash disabled:cursor-not-allowed"
                 >
                   {skipping ? '跳过中...' : '跳过'}
                 </button>

@@ -40,13 +40,13 @@ export default function ConfirmDialog({
       <div className={`relative bg-paper-base border-2 ${borderColor} rounded-sm max-w-md w-full mx-4 p-6`}>
         {/* 标题 */}
         {title && (
-          <h2 className="text-2xl font-serif text-ink-heavy mb-4 tracking-widest">
+          <h2 className="text-2xl text-ink-heavy mb-4 tracking-widest">
             {title}
           </h2>
         )}
 
         {/* 正文 */}
-        <p className="text-lg text-ink-medium leading-loose mb-6">
+        <p className="text-lg text-ink-medium leading-relaxed mb-6">
           {message}
         </p>
 
@@ -55,14 +55,14 @@ export default function ConfirmDialog({
           {cancelText && onCancel && (
             <button
               onClick={onCancel}
-              className="flex-1 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep"
+              className="flex-1 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm active:bg-paper-deep"
             >
               {cancelText}
             </button>
           )}
           <button
             onClick={onConfirm}
-            className={`${cancelText ? 'flex-1' : 'w-full'} min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80`}
+            className={`${cancelText ? 'flex-1' : 'w-full'} min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80`}
           >
             {confirmText}
           </button>

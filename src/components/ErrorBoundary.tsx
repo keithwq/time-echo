@@ -28,13 +28,13 @@ export class ErrorBoundary extends React.Component<Props, State> {
       return (
         <div className="min-h-screen bg-paper-base flex items-center justify-center p-4">
           <div className="max-w-md w-full text-center">
-            <h1 className="text-2xl font-serif text-ink-heavy mb-4">出现问题了</h1>
+            <h1 className="text-2xl text-ink-heavy mb-4">出现问题了</h1>
             <p className="text-lg text-ink-medium mb-6">
               应用遇到了一个错误。请刷新页面重试。
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
             >
               刷新页面
             </button>

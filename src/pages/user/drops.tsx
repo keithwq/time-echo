@@ -69,15 +69,15 @@ export default function UserDrops() {
   return (
     <UserLayout>
       <div className="max-w-2xl">
-        <h2 className="text-2xl font-serif text-ink-heavy tracking-widest mb-8">水滴流水</h2>
+        <h2 className="text-2xl text-ink-heavy tracking-widest mb-8">水滴流水</h2>
 
         {/* 筛选 */}
-        <div className="flex gap-3 mb-6">
+        <div className="flex gap-4 mb-6">
           {filterButtons.map((b) => (
             <button
               key={b.key}
               onClick={() => setFilter(b.key)}
-              className={`px-5 min-h-[48px] text-lg font-serif border-2 rounded-sm transition-colors ${
+              className={`px-5 min-h-[48px] text-lg border-2 rounded-sm transition-colors ${
                 filter === b.key
                   ? 'bg-seal-red text-paper-base border-seal-red'
                   : 'bg-transparent border-ink-wash text-ink-medium hover:border-ink-medium'
@@ -97,7 +97,7 @@ export default function UserDrops() {
         ) : (
           <>
             {/* 表头 */}
-            <div className="flex gap-4 py-3 border-b border-ink-wash text-base text-ink-medium">
+            <div className="flex gap-4 py-4 border-b border-ink-wash text-base text-ink-medium">
               <span className="flex-1">时间</span>
               <span className="w-40">操作类型</span>
               <span className="w-20 text-right">数量</span>
@@ -115,7 +115,7 @@ export default function UserDrops() {
                   <li key={log.id} className="flex gap-4 py-4 border-b border-ink-wash items-center">
                     <span className="flex-1 text-lg text-ink-medium">{date}</span>
                     <span className="w-40 text-lg text-ink-heavy">{log.reason}</span>
-                    <span className={`w-20 text-lg text-right font-serif ${isIncome ? 'text-ink-heavy' : 'text-seal-red'}`}>
+                    <span className={`w-20 text-lg text-right ${isIncome ? 'text-ink-heavy' : 'text-seal-red'}`}>
                       {isIncome ? '+' : ''}{log.amount}
                     </span>
                     <span className="w-20 text-lg text-ink-medium text-right">{log.balance_after}</span>

@@ -8,28 +8,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'paper-base': '#F7F4ED',
-        'paper-deep': '#EBE5D9',
-        'ink-heavy': '#1F1E1D',
-        'ink-medium': '#4A4845', // 调整以达到 7:1 对比度
-        'ink-wash': '#9C9994',
-        'seal-red': '#8B2626',
+        'paper-base': '#FFFFFF',
+        'paper-deep': '#F5F5F5',
+        'ink-heavy': '#1A1A1A',
+        'ink-medium': '#666666',
+        'ink-wash': '#999999',
+        'seal-red': '#D32F2F',
       },
       fontFamily: {
-        serif: [
-          'ui-serif',
-          'Georgia',
-          'Nimbus Roman No9 L',
-          'Songti SC',
-          'Noto Serif CJK SC',
-          'Source Han Serif SC',
-          'Source Han Serif CN',
-          'STSong',
-          'AR PL New Sung',
-          'AR PL SungtiL GB',
-          'NSimSun',
-          'SimSun',
-          'serif',
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          '"Microsoft YaHei"',
+          '"PingFang SC"',
+          '"Source Han Sans SC"',
+          'sans-serif',
         ],
       },
       fontSize: {
@@ -37,9 +31,11 @@ module.exports = {
         lg: '18px',
         xl: '20px',
         '2xl': '24px',
+        '3xl': '30px',
       },
       lineHeight: {
-        loose: '1.8',
+        snug: '1.3',
+        relaxed: '1.6',
       },
       minHeight: {
         '56': '56px',

@@ -111,7 +111,7 @@ export default function FeedbackPage() {
       <div className="min-h-dvh bg-paper-base flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">✓</div>
-          <h2 className="text-2xl font-serif text-ink-heavy mb-3">感谢反馈！</h2>
+          <h2 className="text-2xl text-ink-heavy mb-4">感谢反馈！</h2>
           <p className="text-lg text-ink-medium">您的反馈已成功提交，我们会尽快查看并回复。</p>
         </div>
       </div>
@@ -127,18 +127,18 @@ export default function FeedbackPage() {
         >
           ‹ 返回
         </button>
-        <h1 className="text-2xl font-serif text-ink-heavy tracking-widest">提交反馈</h1>
+        <h1 className="text-2xl text-ink-heavy tracking-widest">提交反馈</h1>
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-8">
-        <p className="text-lg text-ink-medium mb-8 leading-loose">
+        <p className="text-lg text-ink-medium mb-8 leading-relaxed">
           您的反馈对我们很重要，帮助我们做得更好。请详细描述您的想法。
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* 反馈类型 */}
           <div>
-            <label className="text-lg font-serif text-ink-heavy font-bold mb-3 block">
+            <label className="text-lg text-ink-heavy font-bold mb-4 block">
               反馈类型 <span className="text-seal-red">*</span>
             </label>
             <select
@@ -147,7 +147,7 @@ export default function FeedbackPage() {
                 setFormData({ ...formData, type: e.target.value as FeedbackType });
                 setErrors({ ...errors, type: undefined });
               }}
-              className="w-full px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm appearance-none"
+              className="w-full px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm appearance-none"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231F1E1D' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
                 backgroundRepeat: 'no-repeat',
@@ -167,7 +167,7 @@ export default function FeedbackPage() {
 
           {/* 反馈标题 */}
           <div>
-            <label className="text-lg font-serif text-ink-heavy font-bold mb-3 block">
+            <label className="text-lg text-ink-heavy font-bold mb-4 block">
               反馈标题 <span className="text-seal-red">*</span>
             </label>
             <div className="relative">
@@ -180,19 +180,19 @@ export default function FeedbackPage() {
                 }}
                 placeholder="简要描述您的反馈..."
                 maxLength={100}
-                className="w-full px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
+                className="w-full px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 text-base text-ink-wash">
                 {formData.title.length} / 100
               </div>
             </div>
-            <p className="text-base text-ink-wash mt-2">至少 20 字，最多 100 字</p>
-            {errors.title && <p className="text-base text-seal-red mt-2">{errors.title}</p>}
+            <p className="text-lg text-ink-wash mt-2">至少 20 字，最多 100 字</p>
+            {errors.title && <p className="text-lg text-seal-red mt-2">{errors.title}</p>}
           </div>
 
           {/* 反馈内容 */}
           <div>
-            <label className="text-lg font-serif text-ink-heavy font-bold mb-3 block">
+            <label className="text-lg text-ink-heavy font-bold mb-4 block">
               反馈内容 <span className="text-seal-red">*</span>
             </label>
             <div className="relative">
@@ -204,19 +204,19 @@ export default function FeedbackPage() {
                 }}
                 placeholder="请详细描述您的反馈..."
                 maxLength={1000}
-                className="w-full px-4 py-3 min-h-[200px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm resize-none"
+                className="w-full px-4 py-4 min-h-[200px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm resize-none"
               />
               <div className="absolute right-4 bottom-4 text-base text-ink-wash">
                 {formData.content.length} / 1000
               </div>
             </div>
-            <p className="text-base text-ink-wash mt-2">至少 20 字，最多 1000 字</p>
-            {errors.content && <p className="text-base text-seal-red mt-2">{errors.content}</p>}
+            <p className="text-lg text-ink-wash mt-2">至少 20 字，最多 1000 字</p>
+            {errors.content && <p className="text-lg text-seal-red mt-2">{errors.content}</p>}
           </div>
 
           {/* 联系方式 */}
           <div>
-            <label className="text-lg font-serif text-ink-heavy font-bold mb-3 block">
+            <label className="text-lg text-ink-heavy font-bold mb-4 block">
               联系方式 <span className="text-seal-red">*</span>
             </label>
             <input
@@ -227,28 +227,28 @@ export default function FeedbackPage() {
                 setErrors({ ...errors, contactInfo: undefined });
               }}
               placeholder="请输入邮箱或手机号"
-              className="w-full px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
+              className="w-full px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
             />
-            <p className="text-base text-ink-wash mt-2">邮箱或手机号格式</p>
-            {errors.contactInfo && <p className="text-base text-seal-red mt-2">{errors.contactInfo}</p>}
+            <p className="text-lg text-ink-wash mt-2">邮箱或手机号格式</p>
+            {errors.contactInfo && <p className="text-lg text-seal-red mt-2">{errors.contactInfo}</p>}
           </div>
 
           {/* 错误提示 */}
-          {errors.submit && <p className="text-base text-seal-red text-center">{errors.submit}</p>}
+          {errors.submit && <p className="text-lg text-seal-red text-center">{errors.submit}</p>}
 
           {/* 按钮 */}
           <div className="flex gap-4 mt-8">
             <button
               type="button"
               onClick={handleCancel}
-              className="flex-1 px-6 py-3 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-deep transition-colors"
+              className="flex-1 px-6 py-4 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-deep transition-colors"
             >
               取消
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 px-6 py-3 min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm hover:bg-opacity-90 transition-colors disabled:bg-ink-wash disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-4 min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm hover:bg-opacity-90 transition-colors disabled:bg-ink-wash disabled:cursor-not-allowed"
             >
               {isSubmitting ? '提交中...' : '提交反馈'}
             </button>

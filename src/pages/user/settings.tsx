@@ -116,7 +116,7 @@ export default function UserSettings() {
     return (
       <UserLayout>
         <div className="flex flex-col items-center justify-center h-48 gap-4">
-          <p className="text-2xl font-serif text-ink-heavy">保存成功</p>
+          <p className="text-2xl text-ink-heavy">保存成功</p>
           <p className="text-lg text-ink-medium">正在返回个人信息页...</p>
         </div>
       </UserLayout>
@@ -126,7 +126,7 @@ export default function UserSettings() {
   return (
     <UserLayout>
       <div className="max-w-xl">
-        <h2 className="text-2xl font-serif text-ink-heavy tracking-widest mb-8">账户设置</h2>
+        <h2 className="text-2xl text-ink-heavy tracking-widest mb-8">账户设置</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <Field label="昵称" error={errors.real_name}>
             <input
@@ -135,7 +135,7 @@ export default function UserSettings() {
               maxLength={50}
               placeholder="您的姓名或昵称"
               onChange={(e) => setForm({ ...form, real_name: e.target.value })}
-              className="w-full px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
+              className="w-full px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
             />
           </Field>
 
@@ -147,7 +147,7 @@ export default function UserSettings() {
               max={2016}
               placeholder="例如：1950"
               onChange={(e) => setForm({ ...form, birth_year: e.target.value })}
-              className="w-full px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
+              className="w-full px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
             />
           </Field>
 
@@ -158,7 +158,7 @@ export default function UserSettings() {
                   key={g}
                   type="button"
                   onClick={() => setForm({ ...form, gender: g })}
-                  className={`flex-1 min-h-[48px] text-lg font-serif border-2 rounded-sm transition-colors ${
+                  className={`flex-1 min-h-[48px] text-lg border-2 rounded-sm transition-colors ${
                     form.gender === g
                       ? 'bg-seal-red text-paper-base border-seal-red'
                       : 'bg-transparent border-ink-wash text-ink-heavy hover:border-ink-medium'
@@ -177,7 +177,7 @@ export default function UserSettings() {
               maxLength={100}
               placeholder="例如：山东省济南市"
               onChange={(e) => setForm({ ...form, birth_place: e.target.value })}
-              className="w-full px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
+              className="w-full px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
             />
           </Field>
 
@@ -187,7 +187,7 @@ export default function UserSettings() {
               value={form.emergency_email}
               placeholder="用于接收通知"
               onChange={(e) => setForm({ ...form, emergency_email: e.target.value })}
-              className="w-full px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
+              className="w-full px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
             />
           </Field>
 
@@ -197,14 +197,14 @@ export default function UserSettings() {
             <button
               type="button"
               onClick={() => router.push('/user/profile')}
-              className="flex-1 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-deep transition-colors"
+              className="flex-1 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-deep transition-colors"
             >
               取消
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm disabled:bg-ink-wash transition-colors"
+              className="flex-1 min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm disabled:bg-ink-wash transition-colors"
             >
               {saving ? '保存中...' : '保存'}
             </button>
@@ -218,7 +218,7 @@ export default function UserSettings() {
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="text-lg font-serif text-ink-heavy font-bold mb-3 block">{label}</label>
+      <label className="text-lg text-ink-heavy font-bold mb-4 block">{label}</label>
       {children}
       {error && <p className="text-base text-seal-red mt-2">{error}</p>}
     </div>

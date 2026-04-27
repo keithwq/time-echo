@@ -54,23 +54,23 @@ export default function LoginPage() {
         <div className="max-w-md w-full">
           <div className="space-y-8">
             <div className="text-center">
-              <h1 className="text-3xl font-serif text-ink-heavy tracking-widest mb-2">
+              <h1 className="text-3xl text-ink-heavy tracking-widest mb-2">
                 时光回响
               </h1>
-              <p className="text-base text-ink-medium font-serif">
+              <p className="text-base text-ink-medium">
                 登录您的账号
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
-                <div className="bg-seal-red bg-opacity-10 border-l-4 border-seal-red px-4 py-3 rounded-sm">
+                <div className="bg-seal-red bg-opacity-10 border-l-4 border-seal-red px-4 py-4 rounded-sm">
                   <p className="text-seal-red text-base">{error}</p>
                 </div>
               )}
 
               <div>
-                <label className="block text-lg text-ink-heavy font-serif mb-2">
+                <label className="block text-lg text-ink-heavy mb-2">
                   用户名
                 </label>
                 <input
@@ -78,12 +78,12 @@ export default function LoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="输入您的用户名"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
                 />
               </div>
 
               <div>
-                <label className="block text-lg text-ink-heavy font-serif mb-2">
+                <label className="block text-lg text-ink-heavy mb-2">
                   密码
                 </label>
                 <input
@@ -91,14 +91,14 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="输入您的密码"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
               >
                 {loading ? '正在登录...' : '登录'}
               </button>
@@ -109,7 +109,7 @@ export default function LoginPage() {
                 还没有账号？{' '}
                 <button
                   onClick={() => router.push('/register')}
-                  className="text-seal-red hover:underline font-serif"
+                  className="text-seal-red hover:underline"
                 >
                   立即注册
                 </button>

@@ -56,7 +56,7 @@ function renderMarkdown(markdown: string): React.ReactNode {
     // 一级标题
     if (line.startsWith('# ')) {
       elements.push(
-        <h1 key={i} className="text-3xl font-serif text-ink-heavy mt-6 mb-4">
+        <h1 key={i} className="text-3xl text-ink-heavy mt-6 mb-4">
           {line.substring(2)}
         </h1>
       );
@@ -67,7 +67,7 @@ function renderMarkdown(markdown: string): React.ReactNode {
     // 二级标题
     if (line.startsWith('## ')) {
       elements.push(
-        <h2 key={i} className="text-2xl font-serif text-ink-heavy mt-5 mb-3">
+        <h2 key={i} className="text-2xl text-ink-heavy mt-5 mb-4">
           {line.substring(3)}
         </h2>
       );
@@ -101,7 +101,7 @@ function renderMarkdown(markdown: string): React.ReactNode {
 
     // 普通段落
     elements.push(
-      <p key={i} className="text-lg text-ink-heavy leading-relaxed font-serif mb-4">
+      <p key={i} className="text-lg text-ink-heavy leading-relaxed mb-4">
         {line}
       </p>
     );
@@ -400,7 +400,7 @@ export default function PreviewPage() {
     return (
       <div className="min-h-screen bg-paper-base flex items-center justify-center">
         <div className="text-center">
-          <p className="text-lg text-ink-medium font-serif">正在加载...</p>
+          <p className="text-lg text-ink-medium">正在加载...</p>
         </div>
       </div>
     );
@@ -411,10 +411,10 @@ export default function PreviewPage() {
     return (
       <div className="min-h-screen bg-paper-base flex items-center justify-center p-4">
         <div className="text-center max-w-md">
-          <p className="text-lg text-seal-red font-serif mb-6">{error}</p>
+          <p className="text-lg text-seal-red mb-6">{error}</p>
           <button
             onClick={() => router.back()}
-            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
           >
             返回
           </button>
@@ -437,7 +437,7 @@ export default function PreviewPage() {
         {/* 顶部导航 */}
         <div className="sticky top-0 bg-paper-base border-b border-ink-wash z-10">
           <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-            <h1 className="text-2xl font-serif text-ink-heavy">回顾答案</h1>
+            <h1 className="text-2xl text-ink-heavy">回顾答案</h1>
             <button
               onClick={() => setShowingAnswers(false)}
               className="text-ink-medium hover:text-ink-heavy transition-colors"
@@ -455,23 +455,23 @@ export default function PreviewPage() {
                 {editingAnswerId === answer.id ? (
                   // 编辑模式
                   <>
-                    <p className="text-sm text-ink-medium mb-4">{answer.questionContent}</p>
+                    <p className="text-lg text-ink-medium mb-4">{answer.questionContent}</p>
                     <textarea
                       value={editingContent}
                       onChange={(e) => setEditingContent(e.target.value)}
-                      className="w-full min-h-[200px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none mb-4"
+                      className="w-full min-h-[200px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none mb-4"
                     />
                     <div className="flex gap-4">
                       <button
                         onClick={() => handleSaveAnswer(answer.id, editingContent)}
                         disabled={saving}
-                        className="flex-1 min-h-[48px] bg-seal-red text-paper-base text-lg font-serif rounded-sm disabled:opacity-50"
+                        className="flex-1 min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm disabled:opacity-50"
                       >
                         {saving ? '保存中...' : '保存'}
                       </button>
                       <button
                         onClick={() => setEditingAnswerId(null)}
-                        className="flex-1 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm"
+                        className="flex-1 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm"
                       >
                         取消
                       </button>
@@ -480,7 +480,7 @@ export default function PreviewPage() {
                 ) : (
                   // 查看模式
                   <>
-                    <p className="text-sm text-ink-medium mb-2">{answer.questionContent}</p>
+                    <p className="text-lg text-ink-medium mb-2">{answer.questionContent}</p>
                     <p className="text-lg text-ink-heavy mb-4">{answer.content}</p>
                     <button
                       onClick={() => {
@@ -500,7 +500,7 @@ export default function PreviewPage() {
           {/* 返回按钮 */}
           <button
             onClick={() => setShowingAnswers(false)}
-            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
           >
             {memoirGenerated ? '返回人生小传' : '返回'}
           </button>
@@ -518,7 +518,7 @@ export default function PreviewPage() {
       {/* 顶部导航 */}
       <div className="sticky top-0 bg-paper-base border-b border-ink-wash z-10">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-serif text-ink-heavy">{title}</h1>
+          <h1 className="text-2xl text-ink-heavy">{title}</h1>
           <button
             onClick={() => router.back()}
             className="text-ink-medium hover:text-ink-heavy transition-colors"
@@ -537,7 +537,7 @@ export default function PreviewPage() {
             <textarea
               value={memoirEditContent}
               onChange={handleMemoirContentChange}
-              className="w-full min-h-[400px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none mb-4"
+              className="w-full min-h-[400px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none mb-4"
             />
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-ink-medium">字数：{charCount}</p>
@@ -549,13 +549,13 @@ export default function PreviewPage() {
               <button
                 onClick={handleSaveMemoirEdit}
                 disabled={saving}
-                className="flex-1 min-h-[48px] bg-seal-red text-paper-base text-lg font-serif rounded-sm disabled:opacity-50"
+                className="flex-1 min-h-[48px] bg-seal-red text-paper-base text-lg rounded-sm disabled:opacity-50"
               >
                 {saving ? '保存中...' : '保存'}
               </button>
               <button
                 onClick={() => setIsEditingMemoir(false)}
-                className="flex-1 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm"
+                className="flex-1 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm"
               >
                 取消
               </button>
@@ -566,17 +566,17 @@ export default function PreviewPage() {
         {/* 建议显示 */}
         {showingSuggestions && suggestions.length > 0 && (
           <div className="bg-paper-deep rounded-sm p-6 mb-8">
-            <p className="text-lg text-ink-heavy font-serif mb-4">AI 修改建议</p>
-            <div className="space-y-3">
+            <p className="text-lg text-ink-heavy mb-4">AI 修改建议</p>
+            <div className="space-y-4">
               {suggestions.map((suggestion, index) => (
-                <div key={index} className="p-3 bg-paper-base rounded-sm border-l-4 border-seal-red">
-                  <p className="text-base text-ink-heavy">{suggestion}</p>
+                <div key={index} className="p-4 bg-paper-base rounded-sm border-l-4 border-seal-red">
+                  <p className="text-lg text-ink-heavy">{suggestion}</p>
                 </div>
               ))}
             </div>
             <button
               onClick={() => setShowingSuggestions(false)}
-              className="w-full min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm mt-4"
+              className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm mt-4"
             >
               关闭建议
             </button>
@@ -603,7 +603,7 @@ export default function PreviewPage() {
         {/* 未生成时的提示 */}
         {!memoirGenerated && (
           <div className="bg-paper-deep rounded-sm p-6 mb-8 text-center">
-            <p className="text-lg text-ink-heavy font-serif mb-4">
+            <p className="text-lg text-ink-heavy mb-4">
               您已完成 {session.answers.length} 个问题的回答
             </p>
             <p className="text-base text-ink-medium">
@@ -620,7 +620,7 @@ export default function PreviewPage() {
               {/* (1) 自由编辑 */}
               <button
                 onClick={handleEnterEditMode}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
               >
                 自由编辑
               </button>
@@ -629,7 +629,7 @@ export default function PreviewPage() {
               <button
                 onClick={handleSuggestImprovements}
                 disabled={suggestionsRemaining <= 0 || isSuggestingImprovements}
-                className="w-full min-h-[56px] bg-transparent border-2 border-seal-red text-seal-red text-lg font-serif rounded-sm transition-colors active:bg-paper-deep disabled:opacity-50"
+                className="w-full min-h-[56px] bg-transparent border-2 border-seal-red text-seal-red text-lg rounded-sm transition-colors active:bg-paper-deep disabled:opacity-50"
               >
                 {isSuggestingImprovements ? '正在获取建议...' : `AI 提示修改建议 (${suggestionsRemaining} 次)`}
               </button>
@@ -637,7 +637,7 @@ export default function PreviewPage() {
               {/* (3) 确认 */}
               <button
                 onClick={handleConfirm}
-                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm transition-colors active:bg-paper-deep"
+                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm transition-colors active:bg-paper-deep"
               >
                 确认
               </button>
@@ -645,7 +645,7 @@ export default function PreviewPage() {
               {/* (4) 返回查看答案 */}
               <button
                 onClick={() => setShowingAnswers(true)}
-                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm transition-colors active:bg-paper-deep"
+                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm transition-colors active:bg-paper-deep"
               >
                 返回查看答案
               </button>
@@ -653,7 +653,7 @@ export default function PreviewPage() {
               {/* (5) 增加问题包 */}
               <button
                 onClick={() => router.push(`/supplement?sessionId=${router.query.sessionId}`)}
-                className="w-full min-h-[56px] bg-transparent border-2 border-ink-wash text-ink-medium text-lg font-serif rounded-sm transition-colors active:bg-paper-deep"
+                className="w-full min-h-[56px] bg-transparent border-2 border-ink-wash text-ink-medium text-lg rounded-sm transition-colors active:bg-paper-deep"
               >
                 补充内容，完善回忆录
               </button>
@@ -665,7 +665,7 @@ export default function PreviewPage() {
             <button
               onClick={handleGenerateMemoir}
               disabled={generating}
-              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80 disabled:opacity-50"
+              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80 disabled:opacity-50"
             >
               {generating ? '正在生成...' : '生成人生小记'}
             </button>

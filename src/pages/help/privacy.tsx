@@ -98,7 +98,7 @@ export default function PrivacyPage() {
         >
           ‹ 返回
         </button>
-        <h1 className="text-2xl font-serif text-ink-heavy tracking-widest">隐私与安全</h1>
+        <h1 className="text-2xl text-ink-heavy tracking-widest">隐私与安全</h1>
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
@@ -112,7 +112,7 @@ export default function PrivacyPage() {
                 onClick={() => toggleExpand(section.id)}
                 className="w-full p-6 min-h-[56px] flex items-center justify-between bg-paper-deep hover:bg-paper-base transition-colors text-left"
               >
-                <span className="text-lg font-serif text-ink-heavy font-bold">{section.title}</span>
+                <span className="text-lg text-ink-heavy font-bold">{section.title}</span>
                 <span className="text-2xl text-ink-medium ml-4 flex-shrink-0">
                   {expandedId === section.id ? '▼' : '▶'}
                 </span>
@@ -121,9 +121,9 @@ export default function PrivacyPage() {
               {expandedId === section.id && (
                 <div className="p-6 bg-paper-base border-t-2 border-ink-wash space-y-4">
                   {section.content.map((item, index) => (
-                    <div key={index} className="flex gap-3">
+                    <div key={index} className="flex gap-4">
                       <span className="text-seal-red flex-shrink-0 font-bold">•</span>
-                      <p className="text-lg text-ink-medium leading-loose">{item}</p>
+                      <p className="text-lg text-ink-medium leading-relaxed">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -134,20 +134,20 @@ export default function PrivacyPage() {
 
         {/* 联系我们 */}
         <div className="mt-12 p-6 bg-paper-deep border border-ink-wash rounded-sm">
-          <h3 className="text-xl font-serif text-ink-heavy mb-4">有任何隐私问题？</h3>
+          <h3 className="text-xl text-ink-heavy mb-4">有任何隐私问题？</h3>
           <p className="text-lg text-ink-medium mb-4">
             如您对我们的隐私政策或数据处理有任何疑问，欢迎随时联系我们。
           </p>
           <div className="flex gap-4">
             <button
               onClick={() => router.push('/help/faq')}
-              className="flex-1 px-4 py-3 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-base transition-colors"
+              className="flex-1 px-4 py-4 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-base transition-colors"
             >
               常见问题
             </button>
             <button
               onClick={() => router.push('/contact')}
-              className="flex-1 px-4 py-3 min-h-[48px] bg-seal-red text-paper-base text-lg font-serif rounded-sm hover:bg-opacity-90 transition-colors"
+              className="flex-1 px-4 py-4 min-h-[48px] bg-seal-red text-paper-base text-lg rounded-sm hover:bg-opacity-90 transition-colors"
             >
               联系我们
             </button>
@@ -156,7 +156,7 @@ export default function PrivacyPage() {
 
         {/* 最后更新时间 */}
         <div className="mt-8 p-4 bg-paper-deep rounded-sm text-center">
-          <p className="text-base text-ink-wash">
+          <p className="text-lg text-ink-wash">
             最后更新：2026 年 4 月 1 日
           </p>
         </div>

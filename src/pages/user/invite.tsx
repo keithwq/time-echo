@@ -63,29 +63,29 @@ export default function UserInvite() {
   return (
     <UserLayout>
       <div className="max-w-2xl space-y-8">
-        <h2 className="text-2xl font-serif text-ink-heavy tracking-widest">邀请朋友</h2>
+        <h2 className="text-2xl text-ink-heavy tracking-widest">邀请朋友</h2>
 
         {/* 邀请说明 */}
-        <section className="bg-paper-deep border-l-4 border-seal-red px-6 py-4 rounded-sm space-y-3">
-          <p className="text-lg text-ink-heavy font-serif">分享您的故事，帮助更多人记录人生</p>
-          <p className="text-base text-ink-medium leading-loose">
+        <section className="bg-paper-deep border-l-4 border-seal-red px-6 py-4 rounded-sm space-y-4">
+          <p className="text-lg text-ink-heavy">分享您的故事，帮助更多人记录人生</p>
+          <p className="text-base text-ink-medium leading-relaxed">
             邀请朋友注册时使用您的邀请链接，每成功邀请 1 位朋友，您将获得 10 滴墨水奖励。
           </p>
         </section>
 
         {/* 邀请链接 */}
         <section className="space-y-4">
-          <h3 className="text-xl font-serif text-ink-heavy">您的邀请链接</h3>
-          <div className="flex gap-3">
+          <h3 className="text-xl text-ink-heavy">您的邀请链接</h3>
+          <div className="flex gap-4">
             <input
               type="text"
               value={data.inviteUrl}
               readOnly
-              className="flex-1 px-4 py-3 min-h-[56px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg font-serif rounded-sm"
+              className="flex-1 px-4 py-4 min-h-[56px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg rounded-sm"
             />
             <button
               onClick={handleCopy}
-              className="px-6 min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+              className="px-6 min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
             >
               {copied ? '已复制' : '复制'}
             </button>
@@ -97,16 +97,16 @@ export default function UserInvite() {
 
         {/* 邀请成果 */}
         <section className="space-y-4">
-          <h3 className="text-xl font-serif text-ink-heavy">邀请成果</h3>
+          <h3 className="text-xl text-ink-heavy">邀请成果</h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-paper-deep rounded-sm p-6 min-h-[120px] flex flex-col justify-center">
               <p className="text-base text-ink-medium mb-2">已邀请朋友</p>
-              <p className="text-3xl font-serif text-ink-heavy">{data.successCount}</p>
+              <p className="text-3xl text-ink-heavy">{data.successCount}</p>
               <p className="text-base text-ink-medium mt-2">位</p>
             </div>
             <div className="bg-paper-deep rounded-sm p-6 min-h-[120px] flex flex-col justify-center">
               <p className="text-base text-ink-medium mb-2">获得奖励</p>
-              <p className="text-3xl font-serif text-ink-heavy">{data.bonusDrops}</p>
+              <p className="text-3xl text-ink-heavy">{data.bonusDrops}</p>
               <p className="text-base text-ink-medium mt-2">滴墨水</p>
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function UserInvite() {
         <div className="flex gap-4 pt-4">
           <button
             onClick={() => router.push('/user/profile')}
-            className="flex-1 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-deep transition-colors"
+            className="flex-1 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-deep transition-colors"
           >
             返回个人信息
           </button>

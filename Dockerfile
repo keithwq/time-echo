@@ -46,7 +46,6 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # 复制必要文件
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 

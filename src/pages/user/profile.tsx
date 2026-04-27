@@ -79,10 +79,10 @@ export default function UserProfile() {
     <UserLayout>
       <div className="max-w-2xl space-y-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-serif text-ink-heavy tracking-widest">个人信息</h2>
+          <h2 className="text-2xl text-ink-heavy tracking-widest">个人信息</h2>
           <button
             onClick={() => router.push('/user/settings')}
-            className="px-6 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-deep transition-colors"
+            className="px-6 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-deep transition-colors"
           >
             编辑信息
           </button>
@@ -90,7 +90,7 @@ export default function UserProfile() {
 
         {/* 基础档案 */}
         <section className="space-y-4">
-          <h3 className="text-xl font-serif text-ink-heavy border-b border-ink-wash pb-2">基础档案</h3>
+          <h3 className="text-xl text-ink-heavy border-b border-ink-wash pb-4">基础档案</h3>
           <InfoRow label="昵称" value={user.real_name || '未填写'} />
           <InfoRow label="出生年份" value={user.birth_year ? `${user.birth_year} 年` : '未填写'} />
           <InfoRow label="性别" value={user.gender || '未填写'} />
@@ -100,7 +100,7 @@ export default function UserProfile() {
 
         {/* 水滴统计 */}
         <section className="space-y-4">
-          <h3 className="text-xl font-serif text-ink-heavy border-b border-ink-wash pb-2">水滴账户</h3>
+          <h3 className="text-xl text-ink-heavy border-b border-ink-wash pb-4">水滴账户</h3>
           <div className="grid grid-cols-2 gap-4">
             <StatCard label="当前余额" value={`${user.ink_balance} 滴`} />
             <StatCard label="扩展剩余" value={`${user.extensionDropsRemaining} 滴`} />
@@ -111,7 +111,7 @@ export default function UserProfile() {
 
         {/* 访谈统计 */}
         <section className="space-y-4">
-          <h3 className="text-xl font-serif text-ink-heavy border-b border-ink-wash pb-2">访谈记录</h3>
+          <h3 className="text-xl text-ink-heavy border-b border-ink-wash pb-4">访谈记录</h3>
           <div className="grid grid-cols-2 gap-4">
             <StatCard label="已完成访谈" value={`${sessionCount} 次`} />
             <StatCard label="累计字数" value={`${user.total_words_written} 字`} />
@@ -125,7 +125,7 @@ export default function UserProfile() {
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex gap-4 py-2">
+    <div className="flex gap-4 py-4">
       <span className="text-lg text-ink-medium w-24 flex-shrink-0">{label}</span>
       <span className="text-lg text-ink-heavy">{value}</span>
     </div>
@@ -136,7 +136,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-paper-deep rounded-sm p-4 min-h-[72px] flex flex-col justify-center">
       <p className="text-base text-ink-medium">{label}</p>
-      <p className="text-xl font-serif text-ink-heavy mt-1">{value}</p>
+      <p className="text-xl text-ink-heavy mt-1">{value}</p>
     </div>
   );
 }

@@ -115,7 +115,7 @@ export default function ElaboratePage() {
     return (
       <div className="min-h-screen bg-paper-base flex items-center justify-center">
         <div className="text-center">
-          <p className="text-lg text-ink-medium font-serif">正在加载未入稿内容...</p>
+          <p className="text-lg text-ink-medium">正在加载未入稿内容...</p>
         </div>
       </div>
     );
@@ -125,10 +125,10 @@ export default function ElaboratePage() {
     return (
       <div className="min-h-screen bg-paper-base flex items-center justify-center p-4">
         <div className="text-center max-w-md">
-          <p className="text-lg text-seal-red font-serif mb-6">{error}</p>
+          <p className="text-lg text-seal-red mb-6">{error}</p>
           <button
             onClick={() => router.back()}
-            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
           >
             返回
           </button>
@@ -141,10 +141,10 @@ export default function ElaboratePage() {
     return (
       <div className="min-h-screen bg-paper-base flex items-center justify-center p-4">
         <div className="text-center max-w-md">
-          <p className="text-lg text-ink-medium font-serif mb-6">暂无未入稿的内容</p>
+          <p className="text-lg text-ink-medium mb-6">暂无未入稿的内容</p>
           <button
             onClick={() => router.back()}
-            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
           >
             返回
           </button>
@@ -160,7 +160,7 @@ export default function ElaboratePage() {
       {/* 顶部导航 */}
       <div className="sticky top-0 bg-paper-base border-b border-ink-wash z-10">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-serif text-ink-heavy">展开内容</h1>
+          <h1 className="text-2xl text-ink-heavy">展开内容</h1>
           <button
             onClick={() => router.back()}
             className="text-ink-medium hover:text-ink-heavy transition-colors"
@@ -174,8 +174,8 @@ export default function ElaboratePage() {
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* 未入稿回答列表 */}
         <div className="bg-paper-deep rounded-sm p-6 mb-8">
-          <h2 className="text-xl font-serif text-ink-heavy mb-4">选择要展开的内容：</h2>
-          <div className="space-y-3">
+          <h2 className="text-xl text-ink-heavy mb-4">选择要展开的内容：</h2>
+          <div className="space-y-4">
             {memoirData.unusedAnswers.map((answer) => (
               <button
                 key={answer.id}
@@ -190,7 +190,7 @@ export default function ElaboratePage() {
                 }`}
               >
                 <p className="font-serif font-bold mb-1">{answer.questionContent}</p>
-                <p className="text-sm font-serif opacity-75">{answer.contentPreview}...</p>
+                <p className="text-sm opacity-75">{answer.contentPreview}...</p>
               </button>
             ))}
           </div>
@@ -199,13 +199,13 @@ export default function ElaboratePage() {
         {/* 展开输入框 */}
         {currentAnswer && (
           <div className="bg-paper-deep rounded-sm p-6 mb-8">
-            <h3 className="text-lg font-serif text-ink-heavy mb-4">原始回答：</h3>
-            <p className="text-lg text-ink-medium font-serif leading-relaxed mb-6 pb-6 border-b border-ink-wash">
+            <h3 className="text-lg text-ink-heavy mb-4">原始回答：</h3>
+            <p className="text-lg text-ink-medium leading-relaxed mb-6 pb-6 border-b border-ink-wash">
               {currentAnswer.contentPreview}...
             </p>
 
-            <h3 className="text-lg font-serif text-ink-heavy mb-4">补充更多细节：</h3>
-            <p className="text-base text-ink-wash font-serif mb-4">
+            <h3 className="text-lg text-ink-heavy mb-4">补充更多细节：</h3>
+            <p className="text-base text-ink-wash mb-4">
               可以补充更多细节、感受或故事
             </p>
 
@@ -213,7 +213,7 @@ export default function ElaboratePage() {
               value={elaboration}
               onChange={(e) => setElaboration(e.target.value)}
               placeholder="请输入您的补充内容..."
-              className="w-full min-h-[200px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none"
+              className="w-full min-h-[200px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none"
             />
           </div>
         )}
@@ -223,14 +223,14 @@ export default function ElaboratePage() {
           <button
             onClick={handleSubmit}
             disabled={submitting || !elaboration.trim()}
-            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80 disabled:bg-opacity-50 flex items-center justify-center"
+            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80 disabled:bg-opacity-50 flex items-center justify-center"
           >
             {submitting ? '正在提交...' : '提交补充'}
           </button>
 
           <button
             onClick={() => router.back()}
-            className="w-full min-h-[56px] bg-transparent border-2 border-ink-wash text-ink-medium text-lg font-serif rounded-sm transition-colors active:bg-paper-deep flex items-center justify-center"
+            className="w-full min-h-[56px] bg-transparent border-2 border-ink-wash text-ink-medium text-lg rounded-sm transition-colors active:bg-paper-deep flex items-center justify-center"
           >
             返回
           </button>

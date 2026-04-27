@@ -105,7 +105,8 @@
       "Bash(git commit -m 'docs: 更新 Phase 5 状态为完全完成 *)",
       "Bash(git commit -m 'refactor: 统一术语和改造首页 UI *)",
       "Bash(git commit -m 'refactor: 统一术语和改造首页UI *)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "WebFetch(domain:github.com)"
     ],
     "additionalDirectories": [
       "\\tmp",

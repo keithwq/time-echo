@@ -9,7 +9,7 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
           <meta name="description" content="时光回响 - 为老年人的回忆留下尊严的数字档案" />
         </Head>
-        <body className="bg-paper-base text-ink-heavy font-serif">
+        <body className="bg-paper-base text-ink-heavy">
           <Main />
           <NextScript />
         </body>

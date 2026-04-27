@@ -43,13 +43,13 @@ const Home: NextPage = () => {
       <div className="min-h-[100dvh] bg-paper-base flex items-center justify-center p-4">
         <div className="max-w-2xl w-full">
           <div className="space-y-8">
-            <h1 className="text-3xl font-serif text-ink-heavy tracking-widest text-center mb-2">
+            <h1 className="text-3xl text-ink-heavy tracking-widest text-center mb-2">
               时光回响
             </h1>
-            <p className="text-base text-ink-medium text-center font-serif">
+            <p className="text-base text-ink-medium text-center">
               为您的人生故事，留一份温暖的记录
             </p>
-            <div className="text-lg text-ink-heavy leading-loose space-y-6 bg-paper-deep p-6 rounded-sm border-l-4 border-seal-red">
+            <div className="text-lg text-ink-heavy leading-relaxed space-y-6 bg-paper-deep p-6 rounded-sm border-l-4 border-seal-red">
               <p
                 className={`transition-opacity duration-700 ${
                   visibleParagraphs >= 1 ? 'opacity-100' : 'opacity-0'
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
             <button
               onClick={handleEnter}
               disabled={countdown > 0}
-              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+              className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
             >
               {countdown > 0 ? `请阅读 (${countdown}s)` : '开始记录我的故事'}
             </button>
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
               已有账号？{' '}
               <button
                 onClick={() => router.push('/login')}
-                className="text-seal-red hover:underline font-serif"
+                className="text-seal-red hover:underline"
               >
                 立即登录
               </button>

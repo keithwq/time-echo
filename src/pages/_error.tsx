@@ -8,7 +8,7 @@ const Error: NextPage<ErrorProps> = ({ statusCode }) => {
   return (
     <div className="min-h-screen bg-paper-base flex items-center justify-center p-4">
       <div className="max-w-md w-full text-center">
-        <h1 className="text-2xl font-serif text-ink-heavy mb-4">
+        <h1 className="text-2xl text-ink-heavy mb-4">
           {statusCode === 404 ? '页面未找到' : '出现问题了'}
         </h1>
         <p className="text-lg text-ink-medium mb-6">
@@ -18,7 +18,7 @@ const Error: NextPage<ErrorProps> = ({ statusCode }) => {
         </p>
         <button
           onClick={() => window.location.href = '/'}
-          className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80"
+          className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80"
         >
           返回首页
         </button>

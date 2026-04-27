@@ -21,7 +21,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
         >
           ‹ 返回首页
         </button>
-        <h1 className="text-2xl font-serif text-ink-heavy tracking-widest mt-2">我的书房</h1>
+        <h1 className="text-2xl text-ink-heavy tracking-widest mt-2">我的书房</h1>
       </header>
 
       <div className="flex flex-1">
@@ -34,7 +34,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`flex items-center px-6 min-h-[56px] text-lg font-serif transition-colors ${
+                    className={`flex items-center px-6 min-h-[56px] text-lg transition-colors ${
                       isActive
                         ? 'bg-seal-red text-paper-base'
                         : 'text-ink-medium hover:text-ink-heavy hover:bg-paper-base'

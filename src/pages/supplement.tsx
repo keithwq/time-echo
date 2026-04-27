@@ -171,7 +171,7 @@ export default function SupplementPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-paper-base flex items-center justify-center">
-        <p className="text-lg text-ink-medium font-serif">正在分析您的回忆录……</p>
+        <p className="text-lg text-ink-medium">正在分析您的回忆录……</p>
       </div>
     );
   }
@@ -180,10 +180,10 @@ export default function SupplementPage() {
     return (
       <div className="min-h-screen bg-paper-base flex items-center justify-center p-4">
         <div className="text-center max-w-md">
-          <p className="text-lg text-seal-red font-serif mb-6">{error}</p>
+          <p className="text-lg text-seal-red mb-6">{error}</p>
           <button
             onClick={() => router.back()}
-            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm"
+            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm"
           >
             返回
           </button>
@@ -199,7 +199,7 @@ export default function SupplementPage() {
       {/* 顶部导航 */}
       <div className="sticky top-0 bg-paper-base border-b border-ink-wash z-10">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-serif text-ink-heavy">补充内容</h1>
+          <h1 className="text-2xl text-ink-heavy">补充内容</h1>
           <button
             onClick={() => router.back()}
             className="text-ink-medium text-xl leading-none"
@@ -212,10 +212,10 @@ export default function SupplementPage() {
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* 缺口总结 */}
         <div className="bg-paper-deep rounded-sm p-6 mb-8">
-          <p className="text-base text-ink-medium font-serif leading-relaxed">
+          <p className="text-lg text-ink-medium leading-relaxed">
             {completionPackage.gapSummary}
           </p>
-          <p className="text-base text-ink-wash font-serif mt-2">
+          <p className="text-base text-ink-wash mt-2">
             以下问题可以跳过，只填您愿意补充的部分。
           </p>
         </div>
@@ -227,7 +227,7 @@ export default function SupplementPage() {
               <div key={question.id} className="bg-paper-deep rounded-sm p-6">
                 {skipped[question.id] ? (
                   <div className="flex items-center justify-between">
-                    <p className="text-base text-ink-wash font-serif line-through">
+                    <p className="text-base text-ink-wash line-through">
                       {question.question}
                     </p>
                     <button
@@ -240,15 +240,15 @@ export default function SupplementPage() {
                 ) : (
                   <>
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-seal-red text-paper-base rounded-full flex items-center justify-center font-serif font-bold text-base">
+                      <div className="flex-shrink-0 w-8 h-8 bg-seal-red text-paper-base rounded-full flex items-center justify-center font-bold text-base">
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <p className="text-lg font-serif text-ink-heavy mb-1">
+                        <p className="text-lg text-ink-heavy mb-1">
                           {question.question}
                         </p>
                         {question.hint && (
-                          <p className="text-base text-ink-wash font-serif">
+                          <p className="text-lg text-ink-wash">
                             {question.hint}
                           </p>
                         )}
@@ -259,7 +259,7 @@ export default function SupplementPage() {
                       value={answers[question.id] || ''}
                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                       placeholder="请输入您的回答……"
-                      className="w-full min-h-[100px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none mb-4"
+                      className="w-full min-h-[100px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none mb-4"
                     />
 
                     <div className="flex justify-end">
@@ -279,15 +279,15 @@ export default function SupplementPage() {
 
         {/* P1：自由补全 */}
         <div className="mb-10">
-          <h2 className="text-xl font-serif text-ink-heavy mb-6">还有什么想补充的？</h2>
-          <p className="text-base text-ink-wash font-serif mb-6">
+          <h2 className="text-xl text-ink-heavy mb-6">还有什么想补充的？</h2>
+          <p className="text-base text-ink-wash mb-6">
             以下内容全部可选，填一两条即可。
           </p>
 
           <div className="space-y-4">
             {FREE_FIELDS.map((field) => (
               <div key={field.id} className="bg-paper-deep rounded-sm px-5 py-4">
-                <label className="block text-base text-ink-medium font-serif mb-2">
+                <label className="block text-lg text-ink-medium mb-2">
                   {field.label}
                 </label>
                 {field.multiline ? (
@@ -295,7 +295,7 @@ export default function SupplementPage() {
                     value={freeInputs[field.id] || ''}
                     onChange={(e) => handleFreeInputChange(field.id, e.target.value)}
                     placeholder={field.placeholder}
-                    className="w-full min-h-[80px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none"
+                    className="w-full min-h-[80px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-relaxed outline-none focus:border-seal-red resize-none"
                   />
                 ) : (
                   <input
@@ -303,7 +303,7 @@ export default function SupplementPage() {
                     value={freeInputs[field.id] || ''}
                     onChange={(e) => handleFreeInputChange(field.id, e.target.value)}
                     placeholder={field.placeholder}
-                    className="w-full min-h-[48px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red"
+                    className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red"
                   />
                 )}
               </div>
@@ -313,7 +313,7 @@ export default function SupplementPage() {
 
         {/* 错误提示 */}
         {error && (
-          <p className="text-base text-seal-red font-serif mb-4 text-center">{error}</p>
+          <p className="text-base text-seal-red mb-4 text-center">{error}</p>
         )}
 
         {/* 操作按钮 */}
@@ -321,14 +321,14 @@ export default function SupplementPage() {
           <button
             onClick={handleSubmit}
             disabled={submitting}
-            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm transition-colors active:bg-opacity-80 disabled:bg-opacity-50"
+            className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80 disabled:bg-opacity-50"
           >
             {submitting ? '正在更新回忆录……' : '提交补充，更新回忆录'}
           </button>
 
           <button
             onClick={() => router.back()}
-            className="w-full min-h-[56px] bg-transparent border-2 border-ink-wash text-ink-medium text-lg font-serif rounded-sm transition-colors active:bg-paper-deep"
+            className="w-full min-h-[56px] bg-transparent border-2 border-ink-wash text-ink-medium text-lg rounded-sm transition-colors active:bg-paper-deep"
           >
             暂不补充，返回
           </button>

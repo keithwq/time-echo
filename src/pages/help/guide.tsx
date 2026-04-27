@@ -114,7 +114,7 @@ export default function GuidePage() {
         >
           ‹ 返回
         </button>
-        <h1 className="text-2xl font-serif text-ink-heavy tracking-widest">使用指南</h1>
+        <h1 className="text-2xl text-ink-heavy tracking-widest">使用指南</h1>
         <p className="text-lg text-ink-medium mt-2">
           第 {currentStep.stepNumber} / {guideSteps.length} 步
         </p>
@@ -123,7 +123,7 @@ export default function GuidePage() {
       <main className="max-w-3xl mx-auto px-4 py-8">
         {/* 步骤内容 */}
         <div className="mb-8">
-          <h2 className="text-3xl font-serif text-ink-heavy mb-6">{currentStep.title}</h2>
+          <h2 className="text-3xl text-ink-heavy mb-6">{currentStep.title}</h2>
 
           <div className="space-y-4">
             {currentStep.content.map((item, index) => (
@@ -134,7 +134,7 @@ export default function GuidePage() {
                   </span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-lg text-ink-heavy leading-loose">{item}</p>
+                  <p className="text-lg text-ink-heavy leading-relaxed">{item}</p>
                 </div>
               </div>
             ))}
@@ -146,7 +146,7 @@ export default function GuidePage() {
           <button
             onClick={goToPrevStep}
             disabled={currentStepIndex === 0}
-            className="flex-1 px-6 py-3 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-deep transition-colors disabled:border-ink-wash disabled:text-ink-wash disabled:cursor-not-allowed"
+            className="flex-1 px-6 py-4 min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-deep transition-colors disabled:border-ink-wash disabled:text-ink-wash disabled:cursor-not-allowed"
           >
             ‹ 上一步
           </button>
@@ -154,7 +154,7 @@ export default function GuidePage() {
           <button
             onClick={goToNextStep}
             disabled={currentStepIndex === guideSteps.length - 1}
-            className="flex-1 px-6 py-3 min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm hover:bg-opacity-90 transition-colors disabled:bg-ink-wash disabled:cursor-not-allowed"
+            className="flex-1 px-6 py-4 min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm hover:bg-opacity-90 transition-colors disabled:bg-ink-wash disabled:cursor-not-allowed"
           >
             下一步 ›
           </button>
@@ -176,17 +176,17 @@ export default function GuidePage() {
 
         {/* 快速链接 */}
         <div className="mt-12 p-6 bg-paper-deep border border-ink-wash rounded-sm">
-          <h3 className="text-xl font-serif text-ink-heavy mb-4">需要更多帮助？</h3>
+          <h3 className="text-xl text-ink-heavy mb-4">需要更多帮助？</h3>
           <div className="flex gap-4">
             <button
               onClick={() => router.push('/help/faq')}
-              className="flex-1 px-4 py-3 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-base transition-colors"
+              className="flex-1 px-4 py-4 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-base transition-colors"
             >
               常见问题
             </button>
             <button
               onClick={() => router.push('/contact')}
-              className="flex-1 px-4 py-3 min-h-[48px] bg-seal-red text-paper-base text-lg font-serif rounded-sm hover:bg-opacity-90 transition-colors"
+              className="flex-1 px-4 py-4 min-h-[48px] bg-seal-red text-paper-base text-lg rounded-sm hover:bg-opacity-90 transition-colors"
             >
               联系客服
             </button>

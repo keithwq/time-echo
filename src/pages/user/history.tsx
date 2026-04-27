@@ -59,7 +59,7 @@ export default function UserHistory() {
   return (
     <UserLayout>
       <div className="max-w-2xl">
-        <h2 className="text-2xl font-serif text-ink-heavy tracking-widest mb-8">访谈历史</h2>
+        <h2 className="text-2xl text-ink-heavy tracking-widest mb-8">访谈历史</h2>
 
         {error && <p className="text-lg text-seal-red mb-4">{error}</p>}
 
@@ -67,10 +67,10 @@ export default function UserHistory() {
           <p className="text-lg text-ink-medium">加载中...</p>
         ) : sessions.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-xl text-ink-medium font-serif">尚无访谈记录</p>
+            <p className="text-xl text-ink-medium">尚无访谈记录</p>
             <button
               onClick={() => router.push('/interview')}
-              className="mt-6 px-8 min-h-[56px] bg-seal-red text-paper-base text-lg font-serif rounded-sm"
+              className="mt-6 px-8 min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm"
             >
               开始第一次访谈
             </button>
@@ -81,9 +81,9 @@ export default function UserHistory() {
               {sessions.map((s) => {
                 const date = new Intl.DateTimeFormat('zh-CN', { dateStyle: 'medium' }).format(new Date(s.startedAt));
                 return (
-                  <li key={s.id} className="bg-paper-deep rounded-sm p-6 space-y-3">
+                  <li key={s.id} className="bg-paper-deep rounded-sm p-6 space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-serif text-ink-heavy">{date}</span>
+                      <span className="text-lg text-ink-heavy">{date}</span>
                       <span className={`text-base px-3 py-1 rounded-sm ${
                         s.isGenerated
                           ? 'bg-ink-heavy text-paper-base'
@@ -101,17 +101,17 @@ export default function UserHistory() {
                       <span>覆盖 {s.coveredTopics} 个主题</span>
                     </div>
 
-                    <div className="flex gap-3 pt-2">
+                    <div className="flex gap-4 pt-2">
                       <button
                         onClick={() => router.push(`/user/sessions/${s.id}`)}
-                        className="flex-1 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-base transition-colors"
+                        className="flex-1 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-base transition-colors"
                       >
                         查看详情
                       </button>
                       {!s.isCompleted && (
                         <button
                           onClick={() => router.push('/interview')}
-                          className="flex-1 min-h-[48px] bg-seal-red text-paper-base text-lg font-serif rounded-sm"
+                          className="flex-1 min-h-[48px] bg-seal-red text-paper-base text-lg rounded-sm"
                         >
                           继续访谈
                         </button>

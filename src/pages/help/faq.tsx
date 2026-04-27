@@ -124,7 +124,7 @@ export default function FAQPage() {
         >
           ‹ 返回
         </button>
-        <h1 className="text-2xl font-serif text-ink-heavy tracking-widest">常见问题</h1>
+        <h1 className="text-2xl text-ink-heavy tracking-widest">常见问题</h1>
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
@@ -136,9 +136,9 @@ export default function FAQPage() {
               placeholder="搜索问题..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-4 py-3 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
+              className="flex-1 px-4 py-4 min-h-[48px] bg-paper-deep border-2 border-ink-wash text-ink-heavy text-lg outline-none focus:border-seal-red rounded-sm"
             />
-            <button className="px-6 min-h-[48px] bg-seal-red text-paper-base text-lg font-serif rounded-sm hover:bg-opacity-90 transition-colors">
+            <button className="px-6 min-h-[48px] bg-seal-red text-paper-base text-lg rounded-sm hover:bg-opacity-90 transition-colors">
               搜索
             </button>
           </div>
@@ -146,7 +146,7 @@ export default function FAQPage() {
 
         {/* 问题列表 */}
         {filteredFaqs.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {filteredFaqs.map((faq) => (
               <div
                 key={faq.id}
@@ -156,7 +156,7 @@ export default function FAQPage() {
                   onClick={() => toggleExpand(faq.id)}
                   className="w-full p-6 min-h-[56px] flex items-center justify-between bg-paper-deep hover:bg-paper-base transition-colors text-left"
                 >
-                  <span className="text-lg font-serif text-ink-heavy font-bold">{faq.question}</span>
+                  <span className="text-lg text-ink-heavy font-bold">{faq.question}</span>
                   <span className="text-2xl text-ink-medium ml-4 flex-shrink-0">
                     {expandedId === faq.id ? '▼' : '▶'}
                   </span>
@@ -164,7 +164,7 @@ export default function FAQPage() {
 
                 {expandedId === faq.id && (
                   <div className="p-6 bg-paper-base border-t-2 border-ink-wash">
-                    <p className="text-lg text-ink-medium leading-loose">{faq.answer}</p>
+                    <p className="text-lg text-ink-medium leading-relaxed">{faq.answer}</p>
                   </div>
                 )}
               </div>
@@ -173,7 +173,7 @@ export default function FAQPage() {
         ) : (
           <div className="text-center py-12">
             <p className="text-lg text-ink-medium">未找到匹配的问题</p>
-            <p className="text-base text-ink-wash mt-2">请尝试其他搜索词</p>
+            <p className="text-lg text-ink-wash mt-2">请尝试其他搜索词</p>
           </div>
         )}
 
@@ -185,13 +185,13 @@ export default function FAQPage() {
           <div className="flex gap-4">
             <button
               onClick={() => router.push('/help/privacy')}
-              className="flex-1 px-4 py-3 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm hover:bg-paper-base transition-colors"
+              className="flex-1 px-4 py-4 min-h-[48px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm hover:bg-paper-base transition-colors"
             >
               隐私与安全
             </button>
             <button
               onClick={() => router.push('/contact')}
-              className="flex-1 px-4 py-3 min-h-[48px] bg-seal-red text-paper-base text-lg font-serif rounded-sm hover:bg-opacity-90 transition-colors"
+              className="flex-1 px-4 py-4 min-h-[48px] bg-seal-red text-paper-base text-lg rounded-sm hover:bg-opacity-90 transition-colors"
             >
               联系客服
             </button>
