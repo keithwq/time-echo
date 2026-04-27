@@ -1,0 +1,16 @@
+- generic [ref=e1]:
+  - generic [ref=e16]:
+    - banner [ref=e17]:
+      - heading "时光回响 · 访谈" [level=1] [ref=e18]
+    - main [ref=e19]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - heading "是什么事？那时候多大？谁在场？" [level=2] [ref=e97]
+          - paragraph [ref=e98]: 如果有想说的，也可以写几个字。
+        - button "想说几句" [active] [pressed] [ref=e99] [cursor=pointer]
+        - generic [ref=e101]:
+          - generic [ref=e102]: 补充说明
+          - textbox "补充说明" [ref=e103]:
+            - /placeholder: 如果您愿意，也可以再补充几句细节。
+        - button "保存并继续" [ref=e44] [cursor=pointer]
+  - alert [ref=e13]: /interview

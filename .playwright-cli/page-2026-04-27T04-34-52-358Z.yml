@@ -1,0 +1,24 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e16]:
+    - banner [ref=e17]:
+      - heading "时光回响 · 访谈" [level=1] [ref=e18]
+    - main [ref=e19]:
+      - generic [ref=e32]:
+        - heading "聊聊现在的日子吧。您身边都有谁？" [level=2] [ref=e82]
+        - generic [ref=e36]:
+          - button "父母（或公婆/岳父母）还在，要照顾" [ref=e83] [cursor=pointer]
+          - button "长辈都不在了" [ref=e84] [cursor=pointer]
+          - button "老伴儿还在" [ref=e85] [cursor=pointer]
+          - button "老伴儿不在了" [ref=e86] [cursor=pointer]
+          - button "兄弟姐妹还走动" [ref=e87] [cursor=pointer]
+          - button "很少联系了" [ref=e88] [cursor=pointer]
+          - button "孩子在身边" [ref=e89] [cursor=pointer]
+          - button "孩子在别的城市" [ref=e90] [cursor=pointer]
+          - button "孙子/孙女常来" [ref=e91] [cursor=pointer]
+          - button "孙子/孙女见得少" [ref=e92] [cursor=pointer]
+          - button "有护工/保姆帮忙" [ref=e93] [cursor=pointer]
+          - button "一个人住" [ref=e94] [cursor=pointer]
+          - button "身体还行，自己料理没问题" [ref=e95] [cursor=pointer]
+          - button "身体不太方便，需要人搭把手" [ref=e96] [cursor=pointer]
+        - button "保存并继续" [disabled] [ref=e44]
+  - alert [ref=e13]: /interview

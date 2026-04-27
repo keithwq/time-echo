@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  overscroll-behavior-y: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+@layer components {
+  .btn-primary {
+    @apply w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep disabled:border-ink-wash disabled:text-ink-wash;
+  }
+
+  .card-option {
+    @apply p-4 min-h-[64px] border border-ink-wash bg-paper-base text-ink-medium text-lg flex items-center transition-all mb-4;
+  }
+
+  .card-option-selected {
+    @apply p-4 min-h-[64px] border-2 border-ink-heavy bg-paper-deep text-ink-heavy font-bold text-lg flex items-center mb-4;
+  }
+
+  .textarea-canvas {
+    @apply w-full min-h-[200px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg leading-loose font-serif outline-none focus:border-seal-red resize-none p-2 placeholder:text-ink-wash;
+  }
+}
+
+@keyframes ink-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+}
+
+.ink-loader {
+  animation: ink-pulse 2s ease-in-out infinite;
+}

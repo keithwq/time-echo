@@ -1,0 +1,10 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - heading "时光回响" [level=1] [ref=e6]
+    - generic [ref=e7]:
+      - paragraph [ref=e8]: 我们相信，每一段平凡的人生都值得被记录。您的故事、您的回忆、您走过的每一步，都是这个时代最珍贵的证词。
+      - paragraph [ref=e9]: 在这里，您不需要担心被遗忘。我们用最简洁的方式，帮您把生命中最温暖的时刻封存成数字档案——不为商业，只为尊严。
+      - paragraph [ref=e10]: 这是一个零成本的承诺。所有的服务器费用和算力成本，都由馆长和爱心人士共同承担。您永远不会收到任何账单。
+      - paragraph [ref=e11]: 您的数据永远属于您。在您离开后的第 190 天，系统会彻底销毁所有记录，就像一场尊严的告别。
+    - button "请阅读 (5s)" [disabled] [ref=e12]
+  - alert [ref=e13]

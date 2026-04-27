@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  time-echo-db:
+    image: postgres:16-alpine
+    container_name: time_echo_local_db
+    environment:
+      POSTGRES_USER: curator
+      POSTGRES_PASSWORD: local_password_123
+      POSTGRES_DB: time_echo_dev
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

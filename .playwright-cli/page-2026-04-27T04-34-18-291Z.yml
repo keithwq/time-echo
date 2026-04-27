@@ -1,0 +1,23 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e16]:
+    - banner [ref=e17]:
+      - heading "时光回响 · 访谈" [level=1] [ref=e18]
+    - main [ref=e19]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - heading "读完书（或离开学校）以后，您那会儿做了什么？" [level=2] [ref=e68]
+          - paragraph [ref=e35]: 还可跳过 2 次
+        - generic [ref=e36]:
+          - button "种地/干农活" [ref=e69] [cursor=pointer]
+          - button "进了工厂/单位" [ref=e70] [cursor=pointer]
+          - button "自己做买卖/摆摊" [ref=e71] [cursor=pointer]
+          - button "学手艺/跟师傅" [ref=e72] [cursor=pointer]
+          - button "参军/当兵" [ref=e73] [cursor=pointer]
+          - button "接着念书了" [ref=e74] [cursor=pointer]
+          - button "在家里做事" [ref=e75] [cursor=pointer]
+          - button "到处跑，没固定下来" [ref=e76] [cursor=pointer]
+          - button "其他" [ref=e67] [cursor=pointer]
+        - generic [ref=e43]:
+          - button "保存并继续" [disabled] [ref=e44]
+          - button "跳过" [ref=e45] [cursor=pointer]
+  - alert [ref=e13]: /interview

@@ -1,0 +1,22 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e16]:
+    - banner [ref=e17]:
+      - heading "时光回响 · 访谈" [level=1] [ref=e18]
+    - main [ref=e19]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - heading "您小时候，是谁带大的？" [level=2] [ref=e52]
+          - paragraph [ref=e47]: 可以多选。这是您回忆录的开篇，我们一个一个聊。
+          - paragraph [ref=e35]: 还可跳过 4 次
+        - generic [ref=e36]:
+          - button "爸爸" [ref=e53] [cursor=pointer]
+          - button "妈妈" [ref=e54] [cursor=pointer]
+          - button "爷爷" [ref=e55] [cursor=pointer]
+          - button "奶奶" [ref=e56] [cursor=pointer]
+          - button "姥爷" [ref=e57] [cursor=pointer]
+          - button "姥姥" [ref=e58] [cursor=pointer]
+          - button "别的亲人" [ref=e59] [cursor=pointer]
+        - generic [ref=e43]:
+          - button "保存并继续" [disabled] [ref=e44]
+          - button "跳过" [ref=e45] [cursor=pointer]
+  - alert [ref=e13]: /interview

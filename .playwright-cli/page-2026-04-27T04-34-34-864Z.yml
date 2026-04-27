@@ -1,0 +1,18 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e16]:
+    - banner [ref=e17]:
+      - heading "时光回响 · 访谈" [level=1] [ref=e18]
+    - main [ref=e19]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - heading "这些年，有没有一位对您特别重要的人？" [level=2] [ref=e77]
+          - paragraph [ref=e35]: 还可跳过 1 次
+        - generic [ref=e36]:
+          - button "有，是我老伴儿（或以前的爱人）" [ref=e78] [cursor=pointer]
+          - button "有，但不是老伴儿——是子女/朋友/其他亲人" [ref=e79] [cursor=pointer]
+          - button "没有特别的人" [ref=e80] [cursor=pointer]
+          - button "不方便说" [ref=e81] [cursor=pointer]
+        - generic [ref=e43]:
+          - button "保存并继续" [disabled] [ref=e44]
+          - button "跳过" [ref=e45] [cursor=pointer]
+  - alert [ref=e13]: /interview

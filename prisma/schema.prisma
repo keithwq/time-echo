@@ -1,0 +1,316 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 角色枚举定义
+enum Role {
+  USER                // 普通老人用户
+  CARING_VOLUNTEER    // 爱心支援者 (有管理墨水，审核权)
+  WRITING_MENTOR      // 写作志愿者 (代写/润色，有接单权)
+}
+
+// 互助任务状态枚举
+enum TaskStatus {
+  PENDING             // 待接单
+  ONGOING             // 进行中 (已被认领)
+  COMPLETED           // 已交付完成
+  CANCELLED           // 异常取消
+}
+
+model User {
+  id                    String    @id @default(uuid())
+  role                  Role      @default(USER)
+
+  real_name             String?   @db.VarChar(50)
+  birth_year            Int?
+  age                   Int?
+  gender                String?   @db.VarChar(10)
+  birth_place           String?   @db.VarChar(100)
+
+  ink_balance           Int       @default(50)
+  management_ink        Int       @default(0)
+
+  total_words_written   Int       @default(0)
+  total_ink_consumed    Int       @default(0)
+
+  monthly_expense       Decimal   @default(0) @db.Decimal(10, 4)
+  last_active_at        DateTime  @default(now())
+
+  active_deadline       DateTime
+  protection_end        DateTime
+  destruction_date      DateTime
+
+  wechat_notify_token   String?   @unique
+  emergency_email       String?
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  freePolishUsed            Boolean  @default(false)
+  baseInterviewFrozenDrops  Int      @default(0)
+  extensionDropsRemaining   Int      @default(10)
+
+  inkLogs               InkLog[]
+  tasksAsClient         MutualAidTask[] @relation("client")
+  tasksAsMentor         MutualAidTask[] @relation("mentor")
+
+  scrolls Scroll[]
+
+  interviewSessions  InterviewSession[]
+  interviewAnswers   InterviewAnswer[]
+  memoryProfile      MemoryProfile?
+
+  @@index([destruction_date])
+}
+
+model InkLog {
+  id                    String    @id @default(uuid())
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  amount                Int
+  reason                String    @db.VarChar(100)
+  balance_after         Int
+  taskId                String?
+
+  createdAt             DateTime  @default(now())
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([taskId])
+}
+
+model MutualAidTask {
+  id                    String    @id @default(uuid())
+
+  clientId              String
+  client                User      @relation("client", fields: [clientId], references: [id])
+
+  mentorId              String?
+  mentor                User?     @relation("mentor", fields: [mentorId], references: [id])
+
+  status                TaskStatus @default(PENDING)
+
+  locked_ink            Int
+
+  requirement_desc      String    @db.Text
+
+  deliveredAt           DateTime?
+  scrollId              String?
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([mentorId, status])
+  @@index([clientId])
+  @@index([status, createdAt])
+}
+
+// 在文件末尾添加这个”回忆载体”
+model Scroll {
+  id        String   @id @default(uuid())
+  scrollNum Int
+  title     String   @default("Untitled Memory")
+  content   String   @db.Text
+  isLocked  Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images    Image[]
+  polishLogs PolishLog[]
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([userId, scrollNum])
+}
+
+// 题库模型（模板化改造）
+model Question {
+  id              String   @id @default(uuid())
+  contentTemplate String   @db.Text
+  hintTemplate    String?  @db.Text
+
+  topicTags       String[]
+  demographicTags String[]
+  detailTags      String[] @default([])
+  stageTag        String?
+
+  questionPhase   String   @default("base")
+  answerType      String   @default("choice")
+  options         Json?
+
+  adaptableAnswerTypes String[] @default([])
+
+  priority        Int      @default(0)
+
+  createdAt       DateTime @default(now())
+
+  @@index([topicTags])
+  @@index([demographicTags])
+  @@index([questionPhase])
+  @@index([stageTag])
+}
+
+// 图片元数据模型
+model Image {
+  id        String   @id @default(uuid())
+  scrollId  String
+  scroll    Scroll   @relation(fields: [scrollId], references: [id], onDelete: Cascade)
+  url       String
+  size      Int
+  createdAt DateTime @default(now())
+
+  @@index([scrollId])
+}
+
+// AI 润色记录模型
+model PolishLog {
+  id            String   @id @default(uuid())
+  scrollId      String
+  scroll        Scroll   @relation(fields: [scrollId], references: [id], onDelete: Cascade)
+  originalText  String   @db.Text
+  polishedText  String   @db.Text
+  aiAction      String
+  nextQuestions String[] @db.Text
+  tokenUsed     Int
+  costRMB       Decimal  @db.Decimal(10, 4)
+  createdAt     DateTime @default(now())
+
+  @@index([scrollId, createdAt])
+}
+
+// 访谈会话模型
+model InterviewSession {
+  id                String    @id @default(uuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  baseSlotsTotal    Int       @default(50)
+  baseSlotsUsed     Int       @default(0)
+  skippedCount      Int       @default(0)
+  skippedQuestionIds String[] @default([])
+
+  staticMatchCount  Int       @default(0)
+  lastRecommendedQuestionId String?
+
+  isInExpansionMode Boolean   @default(false)
+  expansionPacksUsed Int      @default(0)
+
+  isCompleted       Boolean   @default(false)
+  isGenerated       Boolean   @default(false)
+
+  // Phase 5: 补全机制追踪
+  completionPackageId  String?
+  completionPackage    CompletionPackage?
+  lastCompletionMode   String?  // "supplement" | "elaborate" | null
+  memoirVersion        Int      @default(1)
+
+  // Phase 4: AI 提示追踪
+  aiSuggestionsUsed    Int      @default(0)
+  maxAiSuggestions     Int      @default(3)
+
+  startedAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  answers           InterviewAnswer[]
+
+  @@index([userId, isCompleted])
+}
+
+// 访谈回答模型
+model InterviewAnswer {
+  id                   String              @id @default(uuid())
+  userId               String
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId            String
+  session              InterviewSession    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  questionId           String
+  questionContent      String              @db.Text
+  content              String              @db.Text
+  selectedOption       String?
+  customAnswer         String?             @db.Text
+  sourceQuestionMode   String
+  sourceType           String              @default("local")
+  originalQuestionId   String?
+  adaptedAnswerOptions Json?
+  extractedEntities    Json?
+  topicTag             String?
+  emotionTag           String?
+  polishedText         String?             @db.Text
+
+  // 新增：嵌套追问相关字段
+  nestedAnswers        Json?               // 嵌套追问的答案
+  parentQuestionId     String?             // 父题目ID（如果是追问答案）
+  parentOptionValue    String?             // 触发追问的选项值
+
+  createdAt            DateTime            @default(now())
+
+  @@index([userId, sessionId])
+  @@index([sessionId, createdAt])
+}
+
+// 记忆画像模型
+model MemoryProfile {
+  id                  String    @id @default(uuid())
+  userId              String    @unique
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  demographicTags     String[]  // [“#东北”, “#农村成长”, “#工厂”]
+  coveredTopics       String[]  // [“童年”, “求学”, “工作”]
+  keyLifeEvents       String[]  // [“恢复高考”, “参军”, “下岗”]
+  peopleMentions      String[]  // [“父亲”, “师傅老李”, “妻子”]
+  placeMentions       String[]  // [“老家村子”, “工厂宿舍”, “北京”]
+  emotionTags         String[]  // [“骄傲”, “遗憾”, “温暖”]
+
+  currentStateSummary String?   @db.Text
+
+  updatedAt           DateTime  @updatedAt
+}
+
+// Phase 5: 补全包模型
+model CompletionPackage {
+  id                String    @id @default(uuid())
+  sessionId         String    @unique
+  session           InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  // 缺口分析结果
+  identifiedGaps    String[]  // ["missing_people", "missing_places", ...]
+  gapSummary        String    @db.Text
+
+  // 补全题（快照）
+  questions         Json      // Array of { id, type, question, hint, priority }
+
+  // 追踪
+  isAnswered        Boolean   @default(false)
+  answeredAt        DateTime?
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([sessionId])
+  @@index([createdAt])
+}
+
+// 反馈模型
+model Feedback {
+  id            String    @id @default(uuid())
+  userId        String
+  type          String
+  title         String
+  content       String    @db.Text
+  contactInfo   String
+  status        String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+}
