@@ -94,6 +94,11 @@ export default function InterviewPage() {
   const [showNameCapture, setShowNameCapture] = useState(false);
   const [nameInput, setNameInput] = useState('');
   const [creatingSession, setCreatingSession] = useState(false);
+  const [showProfileCapture, setShowProfileCapture] = useState(false);
+  const [profileAge, setProfileAge] = useState('');
+  const [profileName, setProfileName] = useState('');
+  const [profileGender, setProfileGender] = useState('');
+  const [savingProfile, setSavingProfile] = useState(false);
 
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [textAnswer, setTextAnswer] = useState('');
@@ -426,6 +431,54 @@ export default function InterviewPage() {
       }
 
       const currentUserId = createdUser.id;
+      setUserId(currentUserId);
+      setProfileName(trimmedName);
+      setShowNameCapture(false);
+      setShowProfileCapture(true);
+    } catch (error) {
+      console.error('[CREATE] Error:', error);
+      openDialog(error instanceof Error ? error.message : '创建用户失败', 'error');
+    } finally {
+      setCreatingSession(false);
+    }
+  }
+
+  async function handleSaveProfile(skipProfile: boolean = false) {
+    if (!userId) {
+      openDialog('用户信息丢失，请返回重试。', 'error');
+      return;
+    }
+
+    if (!skipProfile) {
+      const parsedAge = profileAge ? parseInt(profileAge, 10) : null;
+      if (profileAge && (isNaN(parsedAge!) || parsedAge! < 1 || parsedAge! > 120)) {
+        openDialog('请输入有效的年龄（1-120 岁）。', 'warning');
+        return;
+      }
+    }
+
+    setSavingProfile(true);
+
+    try {
+      const updateData: Record<string, any> = {};
+      if (profileName) updateData.real_name = profileName;
+      if (profileAge && !skipProfile) updateData.age = parseInt(profileAge, 10);
+      if (profileGender && !skipProfile) updateData.gender = profileGender;
+
+      if (Object.keys(updateData).length > 0) {
+        const updateResponse = await fetch(`/api/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updateData),
+        });
+
+        if (!updateResponse.ok) {
+          const error = await updateResponse.json();
+          throw new Error(error.error || '更新用户信息失败');
+        }
+      }
 
       const startInterviewResponse = await fetch('/api/interview/start', {
         method: 'POST',
@@ -433,7 +486,7 @@ export default function InterviewPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: currentUserId,
+          userId,
         }),
       });
 
@@ -445,18 +498,17 @@ export default function InterviewPage() {
       const currentSessionId = startResult.data.sessionId as string;
       persistInterviewIdentity(localStorage, {
         sessionId: currentSessionId,
-        userId: currentUserId,
+        userId,
       });
 
-      setUserId(currentUserId);
       setSessionId(currentSessionId);
-      setShowNameCapture(false);
-      await loadCurrentQuestion(currentSessionId, currentUserId);
+      setShowProfileCapture(false);
+      await loadCurrentQuestion(currentSessionId, userId);
     } catch (error) {
-      console.error('[CREATE] Error:', error);
-      openDialog(error instanceof Error ? error.message : '创建访谈失败', 'error');
+      console.error('[PROFILE] Error:', error);
+      openDialog(error instanceof Error ? error.message : '保存失败', 'error');
     } finally {
-      setCreatingSession(false);
+      setSavingProfile(false);
     }
   }
 
@@ -767,16 +819,19 @@ export default function InterviewPage() {
             className="w-full max-w-xl"
           >
             <div className="space-y-6">
-<<<<<<< Updated upstream
-              <div className="space-y-4">
-                <h2 className="text-2xl text-ink-heavy leading-relaxed">我们先记下怎么称呼您</h2>
-                <p className="text-lg text-ink-medium leading-relaxed">
-                  请告诉我您的名字和年龄，这样访谈会更贴切一些。
-=======
               <div className="space-y-3">
                 <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">我们先记下怎么称呼您</h2>
                 <p className="text-lg text-ink-medium leading-loose">
                   请告诉我您的名字。
+                </p>
+              </div>
+
+              <div className="bg-paper-deep border-l-4 border-seal-red p-4 space-y-2">
+                <p className="text-lg text-ink-heavy font-serif">
+                  注册后您将获得 <span className="text-seal-red font-bold">50 滴墨水</span>
+                </p>
+                <p className="text-base text-ink-medium">
+                  其中 40 滴用于开启访谈之旅，10 滴可用于润色和扩展。
                 </p>
               </div>
 
@@ -788,30 +843,14 @@ export default function InterviewPage() {
                   onChange={(event) => setNameInput(event.target.value)}
                   placeholder="请输入您的名字"
                   maxLength={50}
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
                 />
               </label>
 
-<<<<<<< Updated upstream
-              <label className="block">
-                <span className="sr-only">您的年龄</span>
-                <input
-                  type="number"
-                  value={ageInput}
-                  onChange={(event) => setAgeInput(event.target.value)}
-                  placeholder="请输入您的年龄"
-                  min="1"
-                  max="120"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
-                />
-              </label>
-
-=======
->>>>>>> Stashed changes
               <button
                 type="submit"
                 disabled={creatingSession}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
               >
                 {creatingSession ? '正在开启访谈...' : '开始访谈'}
               </button>
@@ -833,12 +872,95 @@ export default function InterviewPage() {
     );
   }
 
+  if (showProfileCapture) {
+    return (
+      <div className="min-h-dvh bg-paper-base flex flex-col">
+        <header className="px-6 py-4 border-b border-ink-wash">
+          <h1 className="text-xl font-serif text-ink-heavy">时光回响 · 访谈</h1>
+        </header>
+
+        <main className="flex-1 px-6 py-8 flex items-center justify-center">
+          <div className="w-full max-w-xl">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">再补充一些信息</h2>
+                <p className="text-lg text-ink-medium leading-loose">
+                  年龄、性别这些可以不填，直接开始也没关系。
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <label className="block">
+                  <span className="sr-only">您的年龄</span>
+                  <input
+                    type="number"
+                    value={profileAge}
+                    onChange={(event) => setProfileAge(event.target.value)}
+                    placeholder="年龄（可选）"
+                    min="1"
+                    max="120"
+                    className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="sr-only">您的性别</span>
+                  <select
+                    value={profileGender}
+                    onChange={(event) => setProfileGender(event.target.value)}
+                    className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
+                  >
+                    <option value="">性别（可选）</option>
+                    <option value="male">男</option>
+                    <option value="female">女</option>
+                    <option value="other">其他</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="flex flex-col gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => void handleSaveProfile(false)}
+                  disabled={savingProfile}
+                  className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                >
+                  {savingProfile ? '正在开启访谈...' : '开始访谈'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => void handleSaveProfile(true)}
+                  disabled={savingProfile}
+                  className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep disabled:border-ink-wash disabled:text-ink-wash disabled:cursor-not-allowed"
+                >
+                  {savingProfile ? '正在开启访谈...' : '跳过，直接开始'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <ConfirmDialog
+          isOpen={dialog.isOpen}
+          type={dialog.type}
+          title={dialog.title}
+          message={dialog.message}
+          onConfirm={() => {
+            dialog.onConfirm?.();
+            setDialog((current) => ({ ...current, isOpen: false }));
+          }}
+        />
+      </div>
+    );
+  }
+
   const specialActionQuestion = isSpecialActionQuestion(currentQuestion);
 
   return (
     <div className="min-h-dvh bg-paper-base flex flex-col">
       <header className="px-6 py-4 border-b border-ink-wash">
-        <h1 className="text-xl text-ink-heavy">时光回响 · 访谈</h1>
+        <h1 className="text-xl font-serif text-ink-heavy">时光回响 · 访谈</h1>
       </header>
 
       <main className="flex-1 px-6 py-8 overflow-y-auto">

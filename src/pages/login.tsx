@@ -1,128 +1,211 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
+import ConfirmDialog from '@/components/ConfirmDialog';
+import { persistInterviewIdentity } from '@/lib/interviewStorage';
+
+interface DialogState {
+  isOpen: boolean;
+  type: 'info' | 'warning' | 'error';
+  message: string;
+}
+
+interface ProgressInfo {
+  userId: string;
+  sessionId: string;
+  lastActivityTime?: string;
+  progress?: string;
+}
 
 export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [progressInfo, setProgressInfo] = useState<ProgressInfo | null>(null);
+  const [dialog, setDialog] = useState<DialogState>({
+    isOpen: false,
+    type: 'info',
+    message: '',
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  function openDialog(message: string, type: DialogState['type'] = 'info') {
+    setDialog({ isOpen: true, type, message });
+  }
+
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    setError('');
 
-    if (!username || !password) {
-      setError('请填写用户名和密码');
+    if (!username.trim()) {
+      openDialog('请输入用户名', 'warning');
+      return;
+    }
+
+    if (!password.trim()) {
+      openDialog('请输入密码', 'warning');
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username: username.trim(), password }),
       });
 
-      const data = await res.json();
+      const result = await response.json();
 
-      if (!res.ok) {
-        setError(data.error || '登录失败');
-        return;
+      if (!response.ok) {
+        throw new Error(result.error || '登录失败');
       }
 
-      localStorage.setItem('userId', data.userId);
-      localStorage.setItem('interview_user_id', data.userId);
-      await router.push('/interview');
-    } catch (err) {
-      setError('网络错误，请重试');
-      console.error(err);
+      setProgressInfo(result.data);
+    } catch (error) {
+      openDialog(error instanceof Error ? error.message : '登录失败', 'error');
     } finally {
       setLoading(false);
     }
-  };
+  }
 
-  return (
-    <>
-      <Head>
-        <title>登录 - 时光回响</title>
-      </Head>
-      <div className="min-h-dvh bg-paper-base flex items-center justify-center p-4">
-        <div className="max-w-md w-full">
-          <div className="space-y-8">
-            <div className="text-center">
-              <h1 className="text-3xl text-ink-heavy tracking-widest mb-2">
-                时光回响
-              </h1>
-              <p className="text-base text-ink-medium">
-                登录您的账号
-              </p>
+  function handleContinue() {
+    if (!progressInfo) return;
+    persistInterviewIdentity(localStorage, {
+      userId: progressInfo.userId,
+      sessionId: progressInfo.sessionId,
+    });
+    router.push('/interview');
+  }
+
+  if (progressInfo) {
+    return (
+      <div className="min-h-dvh bg-paper-base flex flex-col">
+        <header className="px-6 py-4 border-b border-ink-wash">
+          <h1 className="text-xl font-serif text-ink-heavy">时光回响 · 欢迎回来</h1>
+        </header>
+
+        <main className="flex-1 px-6 py-8 flex items-center justify-center">
+          <div className="w-full max-w-xl space-y-6">
+            <div className="space-y-3">
+              <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">您的进度</h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {error && (
-                <div className="bg-seal-red bg-opacity-10 border-l-4 border-seal-red px-4 py-4 rounded-sm">
-                  <p className="text-seal-red text-base">{error}</p>
+            <div className="bg-paper-deep border-l-4 border-seal-red p-6 space-y-4">
+              {progressInfo.lastActivityTime && (
+                <div>
+                  <p className="text-base text-ink-medium">上次访问</p>
+                  <p className="text-lg text-ink-heavy font-serif">{progressInfo.lastActivityTime}</p>
                 </div>
               )}
 
-              <div>
-                <label className="block text-lg text-ink-heavy mb-2">
-                  用户名
-                </label>
+              {progressInfo.progress && (
+                <div>
+                  <p className="text-base text-ink-medium">进度</p>
+                  <p className="text-lg text-ink-heavy font-serif">{progressInfo.progress}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleContinue}
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80"
+              >
+                继续我的故事
+              </button>
+
+              <button
+                onClick={() => {
+                  setProgressInfo(null);
+                  setUsername('');
+                  setPassword('');
+                }}
+                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep"
+              >
+                返回登录
+              </button>
+            </div>
+          </div>
+        </main>
+
+        <ConfirmDialog
+          isOpen={dialog.isOpen}
+          type={dialog.type}
+          message={dialog.message}
+          onConfirm={() => setDialog((s) => ({ ...s, isOpen: false }))}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="min-h-dvh bg-paper-base flex flex-col">
+        <header className="px-6 py-4 border-b border-ink-wash">
+          <h1 className="text-xl font-serif text-ink-heavy">时光回响 · 登录</h1>
+        </header>
+
+        <main className="flex-1 px-6 py-8 flex items-center justify-center">
+          <form onSubmit={handleLogin} className="w-full max-w-xl">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">欢迎回来</h2>
+                <p className="text-lg text-ink-medium leading-loose">
+                  输入用户名和密码，继续您的故事。
+                </p>
+              </div>
+
+              <label className="block">
+                <span className="sr-only">用户名</span>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="输入您的用户名"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
+                  placeholder="用户名"
+                  maxLength={50}
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
                 />
-              </div>
+              </label>
 
-              <div>
-                <label className="block text-lg text-ink-heavy mb-2">
-                  密码
-                </label>
+              <label className="block">
+                <span className="sr-only">密码</span>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="输入您的密码"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
+                  placeholder="密码"
+                  maxLength={100}
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
                 />
-              </div>
+              </label>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
               >
-                {loading ? '正在登录...' : '登录'}
+                {loading ? '登录中...' : '登录'}
               </button>
-            </form>
 
-            <div className="text-center space-y-4">
-              <p className="text-ink-medium text-base">
-                还没有账号？{' '}
-                <button
-                  onClick={() => router.push('/register')}
-                  className="text-seal-red hover:underline"
-                >
-                  立即注册
-                </button>
-              </p>
-              <p className="text-ink-wash text-base">
-                <button className="hover:text-ink-medium transition-colors">
-                  忘记密码？
-                </button>
-              </p>
+              <button
+                type="button"
+                onClick={() => router.push('/')}
+                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep"
+              >
+                返回首页
+              </button>
             </div>
-          </div>
-        </div>
+          </form>
+        </main>
+
+        <ConfirmDialog
+          isOpen={dialog.isOpen}
+          type={dialog.type}
+          message={dialog.message}
+          onConfirm={() => setDialog((s) => ({ ...s, isOpen: false }))}
+        />
       </div>
     </>
   );
 }
+

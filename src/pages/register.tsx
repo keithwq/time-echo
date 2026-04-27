@@ -1,192 +1,173 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
+import ConfirmDialog from '@/components/ConfirmDialog';
+
+interface DialogState {
+  isOpen: boolean;
+  type: 'info' | 'warning' | 'error';
+  message: string;
+}
 
 export default function RegisterPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [realName, setRealName] = useState('');
-  const [age, setAge] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [dialog, setDialog] = useState<DialogState>({
+    isOpen: false,
+    type: 'info',
+    message: '',
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  function openDialog(message: string, type: DialogState['type'] = 'info') {
+    setDialog({ isOpen: true, type, message });
+  }
+
+  async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
-    setError('');
 
-    if (!username || !password || !confirmPassword) {
-      setError('请填写所有必填项');
+    if (!username.trim()) {
+      openDialog('请输入用户名', 'warning');
       return;
     }
 
-    if (username.length < 3) {
-      setError('用户名至少3位');
+    if (username.trim().length < 3) {
+      openDialog('用户名至少需要 3 个字符', 'warning');
+      return;
+    }
+
+    if (!password.trim()) {
+      openDialog('请输入密码', 'warning');
       return;
     }
 
     if (password.length < 6) {
-      setError('密码至少6位');
+      openDialog('密码至少需要 6 个字符', 'warning');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('两次输入的密码不一致');
+      openDialog('两次输入的密码不一致', 'warning');
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/register', {
+      const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username,
+          username: username.trim(),
           password,
-          real_name: realName || null,
-          age: age ? parseInt(age) : null
-        })
+        }),
       });
 
-      const data = await res.json();
+      const result = await response.json();
 
-      if (!res.ok) {
-        setError(data.error || '注册失败');
-        return;
+      if (!response.ok) {
+        throw new Error(result.error || '注册失败');
       }
 
-      localStorage.setItem('userId', data.userId);
-      localStorage.setItem('interview_user_id', data.userId);
-      await router.push('/interview');
-    } catch (err) {
-      setError('网络错误，请重试');
-      console.error(err);
+      openDialog('注册成功！请登录', 'info');
+      setTimeout(() => {
+        router.push('/login');
+      }, 1500);
+    } catch (error) {
+      openDialog(error instanceof Error ? error.message : '注册失败', 'error');
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <>
-      <Head>
-        <title>注册 - 时光回响</title>
-      </Head>
-      <div className="min-h-dvh bg-paper-base flex items-center justify-center p-4">
-        <div className="max-w-md w-full">
-          <div className="space-y-8">
-            <div className="text-center">
-              <h1 className="text-3xl text-ink-heavy tracking-widest mb-2">
-                时光回响
-              </h1>
-              <p className="text-base text-ink-medium">
-                创建账号，开始记录您的故事
-              </p>
-            </div>
+      <div className="min-h-dvh bg-paper-base flex flex-col">
+        <header className="px-6 py-4 border-b border-ink-wash">
+          <h1 className="text-xl font-serif text-ink-heavy">时光回响 · 注册</h1>
+        </header>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {error && (
-                <div className="bg-seal-red bg-opacity-10 border-l-4 border-seal-red px-4 py-4 rounded-sm">
-                  <p className="text-seal-red text-base">{error}</p>
-                </div>
-              )}
+        <main className="flex-1 px-6 py-8 flex items-center justify-center">
+          <form onSubmit={handleRegister} className="w-full max-w-xl">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">开启您的故事</h2>
+                <p className="text-lg text-ink-medium leading-loose">
+                  创建账号，开始记录您的人生。
+                </p>
+              </div>
 
-              <div>
-                <label className="block text-lg text-ink-heavy mb-2">
-                  用户名 <span className="text-seal-red">*</span>
-                </label>
+              <div className="bg-paper-deep border-l-4 border-seal-red p-4 space-y-2">
+                <p className="text-lg text-ink-heavy font-serif">
+                  注册后您将获得 <span className="text-seal-red font-bold">50 滴墨水</span>
+                </p>
+                <p className="text-base text-ink-medium">
+                  其中 40 滴用于开启访谈之旅，10 滴可用于润色和扩展。
+                </p>
+              </div>
+
+              <label className="block">
+                <span className="sr-only">用户名</span>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="至少3位"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
+                  placeholder="用户名（至少 3 个字符）"
+                  maxLength={50}
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
                 />
-              </div>
+              </label>
 
-              <div>
-                <label className="block text-lg text-ink-heavy mb-2">
-                  密码 <span className="text-seal-red">*</span>
-                </label>
+              <label className="block">
+                <span className="sr-only">密码</span>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="至少6位"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
+                  placeholder="密码（至少 6 个字符）"
+                  maxLength={100}
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
                 />
-              </div>
+              </label>
 
-              <div>
-                <label className="block text-lg text-ink-heavy mb-2">
-                  确认密码 <span className="text-seal-red">*</span>
-                </label>
+              <label className="block">
+                <span className="sr-only">确认密码</span>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="再输入一遍密码"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
+                  placeholder="确认密码"
+                  maxLength={100}
+                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg font-serif outline-none focus:border-seal-red px-2"
                 />
-              </div>
-
-              <div>
-                <label className="block text-lg text-ink-heavy mb-2">
-                  您的名字
-                </label>
-                <input
-                  type="text"
-                  value={realName}
-                  onChange={(e) => setRealName(e.target.value)}
-                  placeholder="可选"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
-                />
-              </div>
-
-              <div>
-                <label className="block text-lg text-ink-heavy mb-2">
-                  年龄
-                </label>
-                <input
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  placeholder="可选"
-                  min="1"
-                  max="120"
-                  className="w-full min-h-[56px] bg-transparent border-b-2 border-ink-medium text-ink-heavy text-lg outline-none focus:border-seal-red px-2"
-                />
-              </div>
-
-              <div className="bg-paper-deep border-l-4 border-seal-red px-4 py-4 rounded-sm">
-                <p className="text-ink-heavy text-base leading-relaxed">
-                  ⚠️ 请牢记您的用户名和密码，这是您访问回忆录的唯一凭证。
-                </p>
-              </div>
+              </label>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80 disabled:bg-ink-wash disabled:cursor-not-allowed"
               >
-                {loading ? '正在注册...' : '创建账号'}
+                {loading ? '注册中...' : '注册'}
               </button>
-            </form>
 
-            <div className="text-center">
-              <p className="text-ink-medium text-base">
-                已有账号？{' '}
-                <button
-                  onClick={() => router.push('/login')}
-                  className="text-seal-red hover:underline"
-                >
-                  立即登录
-                </button>
-              </p>
+              <button
+                type="button"
+                onClick={() => router.push('/')}
+                className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep"
+              >
+                返回首页
+              </button>
             </div>
-          </div>
-        </div>
+          </form>
+        </main>
+
+        <ConfirmDialog
+          isOpen={dialog.isOpen}
+          type={dialog.type}
+          message={dialog.message}
+          onConfirm={() => setDialog((s) => ({ ...s, isOpen: false }))}
+        />
       </div>
     </>
   );
