@@ -51,7 +51,9 @@ COPY --from=builder /app/prisma ./prisma
 
 # 复制构建输出
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+# 静态资源需要放在 standalone/.next/static 目录下
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/standalone/.next/static
 
 # 复制 node_modules（包含 Prisma 依赖）
 COPY --from=builder /app/node_modules ./node_modules
