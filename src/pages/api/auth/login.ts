@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       where: { username },
       include: {
         interviewSessions: {
-          orderBy: { createdAt: 'desc' },
+          orderBy: { startedAt: 'desc' },
           take: 1,
         },
       },
@@ -40,11 +40,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (lastSession) {
       sessionId = lastSession.id;
-      const baseSlotsUsed = lastSession.base_slots_used || 0;
+      const baseSlotsUsed = lastSession.baseSlotsUsed || 0;
       progress = `已完成 ${baseSlotsUsed} 题`;
 
-      if (lastSession.updated_at) {
-        const date = new Date(lastSession.updated_at);
+      if (lastSession.updatedAt) {
+        const date = new Date(lastSession.updatedAt);
         lastActivityTime = date.toLocaleDateString('zh-CN', {
           year: 'numeric',
           month: '2-digit',

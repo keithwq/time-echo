@@ -217,6 +217,10 @@ model InterviewSession {
   lastCompletionMode   String?  // "supplement" | "elaborate" | null
   memoirVersion        Int      @default(1)
 
+  // Phase 6: 升级机制追踪
+  storyMarkdown        String?  @db.Text  // 人生故事（3000-5000 字）
+  storyGeneratedAt     DateTime?
+
   // Phase 4: AI 提示追踪
   aiSuggestionsUsed    Int      @default(0)
   maxAiSuggestions     Int      @default(3)

@@ -137,6 +137,7 @@ export default function PreviewPage() {
   const [saving, setSaving] = useState(false);
   const [isPolished, setIsPolished] = useState(false);
   const [polishedMarkdown, setPolishedMarkdown] = useState<string | null>(null);
+  const [isUpgrading, setIsUpgrading] = useState(false);
 
   // AI 建议状态
   const [isSuggestingImprovements, setIsSuggestingImprovements] = useState(false);
@@ -354,6 +355,45 @@ export default function PreviewPage() {
       router.push(`/user/drops?sessionId=${sessionId}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : '确认失败');
+    }
+  };
+
+  // 升级到人生故事
+  const handleUpgradeToStory = async () => {
+    try {
+      setIsUpgrading(true);
+      const userId = getUserId(sessionData);
+      const sessionId = router.query.sessionId;
+
+      if (!userId || !sessionId || !previewData) {
+        setError('用户信息丢失');
+        return;
+      }
+
+      const response = await fetch('/api/interview/upgrade-story', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId,
+          sessionId,
+          memoirMarkdown: previewData.markdown,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('升级失败');
+      }
+
+      const result = await response.json();
+      if (result.success) {
+        router.push(`/story?sessionId=${sessionId}`);
+      } else {
+        setError(result.error || '升级失败');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '升级失败');
+    } finally {
+      setIsUpgrading(false);
     }
   };
 
@@ -634,7 +674,16 @@ export default function PreviewPage() {
                 {isSuggestingImprovements ? '正在获取建议...' : `AI 提示修改建议 (${suggestionsRemaining} 次)`}
               </button>
 
-              {/* (3) 确认 */}
+              {/* (3) 升级到人生故事 */}
+              <button
+                onClick={handleUpgradeToStory}
+                disabled={isUpgrading}
+                className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg rounded-sm transition-colors active:bg-opacity-80 disabled:opacity-50"
+              >
+                {isUpgrading ? '正在生成...' : '生成更完整版本（人生故事）'}
+              </button>
+
+              {/* (4) 确认 */}
               <button
                 onClick={handleConfirm}
                 className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm transition-colors active:bg-paper-deep"
@@ -642,7 +691,7 @@ export default function PreviewPage() {
                 确认
               </button>
 
-              {/* (4) 返回查看答案 */}
+              {/* (5) 返回查看答案 */}
               <button
                 onClick={() => setShowingAnswers(true)}
                 className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg rounded-sm transition-colors active:bg-paper-deep"
@@ -650,7 +699,7 @@ export default function PreviewPage() {
                 返回查看答案
               </button>
 
-              {/* (5) 增加问题包 */}
+              {/* (6) 补充内容 */}
               <button
                 onClick={() => router.push(`/supplement?sessionId=${router.query.sessionId}`)}
                 className="w-full min-h-[56px] bg-transparent border-2 border-ink-wash text-ink-medium text-lg rounded-sm transition-colors active:bg-paper-deep"
