@@ -44,6 +44,7 @@ describe('AI Polish (润色) Tests', () => {
         userId: testUserId,
         sessionId: session.id,
         questionId: 'q-001',
+        questionContent: '请描述您的工作经历',
         content: '我觉得那个时候挺困难的，特别是在工厂里工作',
       },
     });

@@ -66,13 +66,30 @@ ${memoirText}
     });
 
     console.log('[generateMemoirContent] API 调用成功');
-    const content = response.choices[0].message.content;
+    console.log('[generateMemoirContent] 响应结构:', JSON.stringify(response, null, 2).substring(0, 500));
+
+    // 检查响应格式
+    if (!response.choices || !Array.isArray(response.choices) || response.choices.length === 0) {
+      console.error('[generateMemoirContent] 响应格式错误:', response);
+      throw new Error('Invalid response format: choices is empty or undefined');
+    }
+
+    const message = response.choices[0].message;
+    if (!message) {
+      console.error('[generateMemoirContent] message 不存在:', response.choices[0]);
+      throw new Error('Invalid response format: message is undefined');
+    }
+
+    // 处理 DeepSeek 推理模型的响应格式
+    const content = message.content || (message as any).reasoning_content;
+
     if (content) {
       console.log('[generateMemoirContent] 生成内容长度:', content.length, '字符');
       return content;
     }
 
-    throw new Error('Unexpected response format from AI');
+    console.error('[generateMemoirContent] content 不存在:', message);
+    throw new Error('Unexpected response format from AI: no content found');
   } catch (error) {
     console.error('[generateMemoirContent] 错误详情:', {
       message: error instanceof Error ? error.message : String(error),

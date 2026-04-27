@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 
 /**
  * POST /api/ai/polish
- * AI 润色（首次免费，后续 5 水滴）
+ * AI 润色（首次免费，后续 5 滴墨水）
  */
 export default async function handler(
   req: NextApiRequest,
@@ -40,11 +40,11 @@ export default async function handler(
     const isFree = !user.freePolishUsed;
     const cost = isFree ? 0 : 5;
 
-    // 检查水滴余额（如果需要扣费）
+    // 检查墨水余额（如果需要扣费）
     if (!isFree && user.extensionDropsRemaining < cost) {
       return res.status(400).json({
         success: false,
-        error: '扩展操作水滴不足，需要 5 个水滴',
+        error: '扩展操作墨水不足，需要 5 滴墨水',
       });
     }
 
@@ -63,7 +63,7 @@ export default async function handler(
           data: { freePolishUsed: true },
         });
       } else {
-        // 扣除 5 个扩展水滴
+        // 扣除 5 滴扩展墨水
         updatedUser = await tx.user.update({
           where: { id: userId },
           data: {
@@ -93,7 +93,7 @@ export default async function handler(
         is_free: isFree,
         cost,
         remaining_drops: result.user.extensionDropsRemaining,
-        message: isFree ? '首次润色免费' : `已消耗 ${cost} 个水滴`,
+        message: isFree ? '首次润色免费' : `已消耗 ${cost} 滴墨水`,
       },
     });
   } catch (error) {

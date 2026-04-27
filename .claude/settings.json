@@ -98,7 +98,11 @@
       "Bash(node -r ts-node/register scripts/quick-test-answers.ts)",
       "Bash(node create-test-data.js)",
       "Bash(node /d/DB/20_PROJECTS/time_echo/create-test-data.js)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: Phase 0-9 initial implementation *)",
+      "Bash(git commit -m 'docs: 更新 IMPLEMENTATION_PLAN.md 同步实际进度 *)",
+      "Bash(git commit -m 'docs: 标记 Phase 5 为完全完成 *)",
+      "Bash(git commit -m 'docs: 更新 Phase 5 状态为完全完成 *)"
     ],
     "additionalDirectories": [
       "\\tmp",

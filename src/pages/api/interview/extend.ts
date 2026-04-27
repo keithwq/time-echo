@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 
 /**
  * POST /api/interview/extend
- * 增加问题位（1 水滴增加 2 个问题位）
+ * 增加问题位（1 墨水增加 2 个问题位）
  */
 export default async function handler(
   req: NextApiRequest,
@@ -23,7 +23,7 @@ export default async function handler(
   }
 
   try {
-    // 原子事务：扣除水滴 + 增加问题位 + 记录流水
+    // 原子事务：扣除墨水 + 增加问题位 + 记录流水
     const result = await prisma.$transaction(async (tx) => {
       // 查询用户
       const user = await tx.user.findUnique({
@@ -34,7 +34,7 @@ export default async function handler(
         throw new Error('User not found');
       }
 
-      // 检查剩余水滴
+      // 检查剩余墨水
       if (user.extensionDropsRemaining < 10) {
         throw new Error('Insufficient extension drops');
       }
@@ -52,7 +52,7 @@ export default async function handler(
         throw new Error('Session does not belong to this user');
       }
 
-      // 扣除 10 个水滴
+      // 扣除 10 个墨水
       const updatedUser = await tx.user.update({
         where: { id: userId },
         data: {
@@ -106,7 +106,7 @@ export default async function handler(
       if (error.message === 'Insufficient extension drops') {
         return res.status(400).json({
           success: false,
-          error: '扩展水滴不足',
+          error: '扩展墨水不足',
         });
       }
       if (error.message === 'Session does not belong to this user') {

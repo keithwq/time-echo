@@ -5,11 +5,12 @@ let aiClient: OpenAI | null = null;
 export function getAIClient(): any {
   if (!aiClient) {
     const apiKey = process.env.OPENAI_API_KEY;
-    const baseURL = process.env.OPENAI_BASE_URL;
+    // 强制使用正确的 DeepSeek API URL，忽略环境变量中的错误配置
+    const baseURL = 'https://api.deepseek.com';
 
     console.log('[aiClient] 初始化 AI 客户端');
     console.log('[aiClient] API Key:', apiKey ? `已设置 (长度: ${apiKey.length})` : '❌ 未设置');
-    console.log('[aiClient] Base URL:', baseURL || '❌ 未设置');
+    console.log('[aiClient] Base URL:', baseURL);
 
     if (!apiKey) {
       throw new Error('OPENAI_API_KEY is not configured');
@@ -17,7 +18,7 @@ export function getAIClient(): any {
 
     aiClient = new OpenAI({
       apiKey,
-      baseURL: baseURL || undefined,
+      baseURL,
     });
   }
 

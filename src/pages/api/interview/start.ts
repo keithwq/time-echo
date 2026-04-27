@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 
 /**
  * POST /api/interview/start
- * 开始访谈会话，冻结 40 水滴
+ * 开始访谈会话，冻结 40 墨水
  */
 export default async function handler(
   req: NextApiRequest,
@@ -41,7 +41,7 @@ export default async function handler(
       });
     }
 
-    // 检查用户水滴余额
+    // 检查用户墨水余额
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: { ink_balance: true, baseInterviewFrozenDrops: true },
@@ -54,13 +54,13 @@ export default async function handler(
     if (user.ink_balance < 40) {
       return res.status(400).json({
         success: false,
-        error: '水滴不足，需要至少 40 个水滴开始访谈',
+        error: '墨水不足，需要至少 40 个墨水开始访谈',
       });
     }
 
-    // 原子事务：冻结水滴 + 创建访谈会话
+    // 原子事务：冻结墨水 + 创建访谈会话
     const result = await prisma.$transaction(async (tx) => {
-      // 冻结 40 水滴
+      // 冻结 40 墨水
       const updatedUser = await tx.user.update({
         where: { id: userId },
         data: {
@@ -104,7 +104,7 @@ export default async function handler(
         skippedCount: result.session.skippedCount,
         frozenDrops: 40,
         remainingBalance: result.user.ink_balance,
-        message: '访谈已开始，已冻结 40 个水滴',
+        message: '访谈已开始，已冻结 40 个墨水',
       },
     });
   } catch (error) {

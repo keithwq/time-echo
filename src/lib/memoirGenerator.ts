@@ -234,6 +234,65 @@ export function generateMemoirWithUnused(
 }
 
 /**
+ * 将 topicTag 映射到人生阶段
+ */
+function mapTopicToStage(topicTag?: string): string {
+  if (!topicTag) return 'unknown';
+
+  // 直接匹配
+  if (STAGE_PRIORITY.includes(topicTag as any)) {
+    return topicTag;
+  }
+
+  // 关键词映射
+  const stageMapping: Record<string, string> = {
+    '童年': '童年',
+    '幼年': '童年',
+    '小时候': '童年',
+    '成长': '童年',
+    '求学': '求学',
+    '上学': '求学',
+    '学校': '求学',
+    '教育': '求学',
+    '学习': '求学',
+    '工作': '工作',
+    '职业': '工作',
+    '事业': '工作',
+    '工厂': '工作',
+    '单位': '工作',
+    '婚姻': '婚姻',
+    '结婚': '婚姻',
+    '伴侣': '婚姻',
+    '配偶': '婚姻',
+    '家庭': '家庭',
+    '子女': '家庭',
+    '孩子': '家庭',
+    '父母': '家庭',
+    '亲人': '家庭',
+    '迁徙': '迁徙',
+    '搬家': '迁徙',
+    '迁移': '迁徙',
+    '进城': '迁徙',
+    '下乡': '迁徙',
+    '时代': '时代记忆',
+    '社会': '时代记忆',
+    '历史': '时代记忆',
+    '晚年': '晚年',
+    '退休': '晚年',
+    '现在': '晚年',
+    '人生': '晚年',
+  };
+
+  for (const [keyword, stage] of Object.entries(stageMapping)) {
+    if (topicTag.includes(keyword)) {
+      return stage;
+    }
+  }
+
+  return 'unknown';
+}
+
+/**
  * 按人生阶段分组回答
  */
 function groupAnswersByStage(
@@ -243,7 +302,7 @@ function groupAnswersByStage(
 
   for (const answer of answers) {
     // 使用传入的 stageTag，或尝试从 topicTag 推断
-    const stage = answer.stageTag || answer.topicTag || 'unknown';
+    const stage = answer.stageTag || mapTopicToStage(answer.topicTag) || 'unknown';
 
     if (!grouped.has(stage)) {
       grouped.set(stage, []);

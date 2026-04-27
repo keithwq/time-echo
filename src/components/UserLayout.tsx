@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 const navItems = [
   { href: '/user/profile', label: '个人信息' },
   { href: '/user/history', label: '访谈历史' },
-  { href: '/user/drops', label: '水滴流水' },
+  { href: '/user/drops', label: '墨水流水' },
   { href: '/user/settings', label: '账户设置' },
 ];
 
