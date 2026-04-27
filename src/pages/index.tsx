@@ -32,7 +32,7 @@ const Home: NextPage = () => {
   }, [countdown]);
 
   const handleEnter = () => {
-    router.push('/interview');
+    router.push('/register');
   };
 
   return (
@@ -86,6 +86,15 @@ const Home: NextPage = () => {
             >
               {countdown > 0 ? `请阅读 (${countdown}s)` : '开始记录我的故事'}
             </button>
+            <p className="text-center text-ink-medium text-base">
+              已有账号？{' '}
+              <button
+                onClick={() => router.push('/login')}
+                className="text-seal-red hover:underline font-serif"
+              >
+                立即登录
+              </button>
+            </p>
           </div>
         </div>
       </div>

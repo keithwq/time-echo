@@ -236,7 +236,7 @@ export function generateMemoirWithUnused(
 /**
  * 将 topicTag 映射到人生阶段
  */
-function mapTopicToStage(topicTag?: string): string {
+function mapTopicToStage(topicTag?: string | null): string {
   if (!topicTag) return 'unknown';
 
   // 直接匹配

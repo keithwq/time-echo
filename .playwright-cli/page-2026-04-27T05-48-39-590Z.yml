@@ -1,0 +1,14 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - heading "时光回响" [level=1] [ref=e6]
+    - paragraph [ref=e7]: 为您的人生故事，留一份温暖的记录
+    - generic [ref=e8]:
+      - paragraph [ref=e9]: 每一段平凡的人生，都值得被记录。您的故事、您的回忆、您走过的每一步，都是珍贵的人生印记。
+      - paragraph [ref=e10]: 在这里，我们用简单的方式，帮您把生命中温暖的时刻整理成册——不为商业，只为传承。
+      - paragraph [ref=e11]: 这是一个公益项目。所有的服务器费用和算力成本，都由志愿者共同承担。您无需支付任何费用。
+      - paragraph [ref=e12]: 您的数据永远属于您，可随时导出或删除。
+    - button "请阅读 (5s)" [disabled] [ref=e13]
+    - paragraph [ref=e14]:
+      - text: 已有账号？
+      - button "立即登录" [ref=e15] [cursor=pointer]
+  - alert [ref=e16]

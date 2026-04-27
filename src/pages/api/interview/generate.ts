@@ -103,8 +103,15 @@ export default async function handler(
 
     const aiGeneratedContent = await generateMemoirContent(memoir, user.real_name || '您');
 
+    // 计算 AI 生成后的实际字数（中文字符数）
+    const actualWordCount = aiGeneratedContent.replace(/\s/g, '').length;
     console.log('[Generate] AI 改写成功，内容长度:', aiGeneratedContent.length);
-    const finalMarkdown = `# ${memoir.title}\n\n> 生成时间：${new Date(memoir.generatedAt).toLocaleString('zh-CN')} | 字数：${memoir.wordCount}\n\n---\n\n${aiGeneratedContent}`;
+    console.log('[Generate] 实际字数（不含空格）:', actualWordCount);
+
+    // 更新 memoir 的字数
+    memoir.wordCount = actualWordCount;
+
+    const finalMarkdown = `# ${memoir.title}\n\n> 生成时间：${new Date(memoir.generatedAt).toLocaleString('zh-CN')} | 字数：${actualWordCount}\n\n---\n\n${aiGeneratedContent}`;
     const isPolished = true;
 
     // 更新会话状态

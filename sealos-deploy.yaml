@@ -1,0 +1,96 @@
+# Sealos 部署配置
+# 在 Sealos 控制台使用此配置部署应用
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-echo
+  labels:
+    app: time-echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: time-echo
+  template:
+    metadata:
+      labels:
+        app: time-echo
+    spec:
+      containers:
+      - name: time-echo
+        image: your-dockerhub-username/time-echo:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: time-echo-secrets
+              key: database-url
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: time-echo-secrets
+              key: openai-api-key
+        - name: OPENAI_BASE_URL
+          value: "https://api.deepseek.com"
+        - name: OPENAI_MODEL
+          value: "deepseek-v4-flash"
+        - name: NODE_ENV
+          value: "production"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: time-echo-service
+spec:
+  selector:
+    app: time-echo
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: time-echo-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+  - hosts:
+    - your-domain.com
+    secretName: time-echo-tls
+  rules:
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: time-echo-service
+            port:
+              number: 3000

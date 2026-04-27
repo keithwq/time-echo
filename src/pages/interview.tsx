@@ -101,6 +101,15 @@ export default function InterviewPage() {
   const [choiceDetailText, setChoiceDetailText] = useState('');
   const [followupDrafts, setFollowupDrafts] = useState<Record<string, FollowupDraft>>({});
 
+  const [questionHistory, setQuestionHistory] = useState<InterviewQuestion[]>([]);
+  const [answerHistory, setAnswerHistory] = useState<Array<{
+    answerId: string;
+    selectedOptions: string[];
+    textAnswer: string;
+    choiceDetailText: string;
+    followupDrafts: Record<string, FollowupDraft>;
+  }>>([]);
+
   const [submitting, setSubmitting] = useState(false);
   const [skipping, setSkipping] = useState(false);
   const [generatingPreview, setGeneratingPreview] = useState(false);
@@ -591,6 +600,18 @@ export default function InterviewPage() {
         throw new Error(result.error || '保存失败');
       }
 
+      const answerId = result.data?.id;
+      if (answerId) {
+        setQuestionHistory([...questionHistory, currentQuestion]);
+        setAnswerHistory([...answerHistory, {
+          answerId,
+          selectedOptions: [...selectedOptions],
+          textAnswer,
+          choiceDetailText,
+          followupDrafts: { ...followupDrafts }
+        }]);
+      }
+
       await loadCurrentQuestion(sessionId, userId);
     } catch (error) {
       console.error('[SUBMIT] Error:', error);
@@ -633,6 +654,39 @@ export default function InterviewPage() {
       openDialog(error instanceof Error ? error.message : '跳过失败', 'error');
     } finally {
       setSkipping(false);
+    }
+  }
+
+  async function handleGoBack() {
+    if (answerHistory.length === 0) return;
+
+    const lastAnswer = answerHistory[answerHistory.length - 1];
+
+    try {
+      const response = await fetch(`/api/interview/answer/${lastAnswer.answerId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('删除失败');
+      }
+
+      setAnswerHistory(prev => prev.slice(0, -1));
+      setQuestionHistory(prev => prev.slice(0, -1));
+
+      const previousQuestion = questionHistory[questionHistory.length - 2];
+      const previousDraft = answerHistory[answerHistory.length - 2];
+
+      if (previousQuestion) {
+        setCurrentQuestion(previousQuestion);
+        setSelectedOptions(previousDraft?.selectedOptions || []);
+        setTextAnswer(previousDraft?.textAnswer || '');
+        setChoiceDetailText(previousDraft?.choiceDetailText || '');
+        setFollowupDrafts(previousDraft?.followupDrafts || {});
+      }
+    } catch (error) {
+      console.error('[GO_BACK] Error:', error);
+      openDialog(error instanceof Error ? error.message : '返回失败', 'error');
     }
   }
 
@@ -809,6 +863,18 @@ export default function InterviewPage() {
           </div>
         )}
 
+        {currentQuestion && !isSpecialActionQuestion(currentQuestion) && (
+          <div className="text-center py-2 text-ink-medium text-base">
+            第 {currentQuestion.baseSlotsUsed || 0} 题 / 共 {currentQuestion.baseSlotsTotal || 50} 题
+          </div>
+        )}
+
+        {currentQuestion && !isSpecialActionQuestion(currentQuestion) && (
+          <div className="bg-paper-deep border-l-4 border-seal-red px-4 py-3 text-ink-medium text-base rounded-sm mb-6">
+            💡 一次性打不完没关系，系统将自动记录您的回答
+          </div>
+        )}
+
         {currentQuestion && specialActionQuestion && (
           <div className="max-w-2xl mx-auto space-y-6">
             <div className="border-2 border-seal-red rounded-sm p-6 bg-paper-deep">
@@ -939,6 +1005,16 @@ export default function InterviewPage() {
             )}
 
             <div className="flex flex-col gap-4 pt-2">
+              {answerHistory.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => void handleGoBack()}
+                  className="w-full min-h-[56px] bg-transparent border-2 border-ink-medium text-ink-heavy text-lg font-serif rounded-sm active:bg-paper-deep"
+                >
+                  ← 返回上一题
+                </button>
+              )}
+
               <button
                 type="button"
                 onClick={() => void handleSubmitAnswer()}

@@ -1,0 +1,18 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e46]:
+    - banner [ref=e47]:
+      - heading "时光回响 · 访谈" [level=1] [ref=e48]
+    - main [ref=e49]:
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - heading "我们先记下怎么称呼您" [level=2] [ref=e53]
+          - paragraph [ref=e54]: 请告诉我您的名字和年龄，这样访谈会更贴切一些。
+        - generic [ref=e55]:
+          - generic [ref=e56]: 您的名字
+          - textbox "您的名字" [ref=e57]:
+            - /placeholder: 请输入您的名字
+        - generic [ref=e58]:
+          - generic [ref=e59]: 您的年龄
+          - spinbutton "您的年龄" [ref=e60]
+        - button "开始访谈" [ref=e61] [cursor=pointer]
+  - alert [ref=e16]: /interview

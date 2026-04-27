@@ -35,6 +35,10 @@ model User {
   gender                String?   @db.VarChar(10)
   birth_place           String?   @db.VarChar(100)
 
+  username              String?   @unique @db.VarChar(50)
+  passwordHash          String?   @db.VarChar(255)
+  lastLogin             DateTime?
+
   ink_balance           Int       @default(50)
   management_ink        Int       @default(0)
 

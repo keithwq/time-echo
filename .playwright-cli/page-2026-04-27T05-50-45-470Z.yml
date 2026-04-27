@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e54]:
+    - generic [ref=e55]:
+      - heading "时光回响" [level=1] [ref=e56]
+      - paragraph [ref=e57]: 登录您的账号
+    - generic [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]: 用户名
+        - textbox "输入您的用户名" [ref=e61]
+      - generic [ref=e62]:
+        - generic [ref=e63]: 密码
+        - textbox "输入您的密码" [ref=e64]
+      - button "登录" [ref=e65] [cursor=pointer]
+    - generic [ref=e66]:
+      - paragraph [ref=e67]:
+        - text: 还没有账号？
+        - button "立即注册" [ref=e68] [cursor=pointer]
+      - paragraph [ref=e69]:
+        - button "忘记密码？" [ref=e70] [cursor=pointer]
+  - alert [ref=e16]: 登录 - 时光回响
