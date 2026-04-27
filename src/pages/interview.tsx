@@ -93,7 +93,6 @@ export default function InterviewPage() {
   const [loading, setLoading] = useState(true);
   const [showNameCapture, setShowNameCapture] = useState(false);
   const [nameInput, setNameInput] = useState('');
-  const [ageInput, setAgeInput] = useState('');
   const [creatingSession, setCreatingSession] = useState(false);
 
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -401,16 +400,10 @@ export default function InterviewPage() {
     });
   }
 
-  async function handleCreateInterview(displayName: string, age: string) {
+  async function handleCreateInterview(displayName: string) {
     const trimmedName = displayName.trim();
     if (!trimmedName) {
       openDialog('请先输入您的名字，我们再开始访谈。', 'warning');
-      return;
-    }
-
-    const parsedAge = parseInt(age, 10);
-    if (!age.trim() || isNaN(parsedAge) || parsedAge < 1 || parsedAge > 120) {
-      openDialog('请输入有效的年龄（1-120 岁）。', 'warning');
       return;
     }
 
@@ -424,7 +417,6 @@ export default function InterviewPage() {
         },
         body: JSON.stringify({
           real_name: trimmedName,
-          age: parsedAge,
         }),
       });
 
@@ -770,15 +762,21 @@ export default function InterviewPage() {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              void handleCreateInterview(nameInput, ageInput);
+              void handleCreateInterview(nameInput);
             }}
             className="w-full max-w-xl"
           >
             <div className="space-y-6">
+<<<<<<< Updated upstream
               <div className="space-y-4">
                 <h2 className="text-2xl text-ink-heavy leading-relaxed">我们先记下怎么称呼您</h2>
                 <p className="text-lg text-ink-medium leading-relaxed">
                   请告诉我您的名字和年龄，这样访谈会更贴切一些。
+=======
+              <div className="space-y-3">
+                <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">我们先记下怎么称呼您</h2>
+                <p className="text-lg text-ink-medium leading-loose">
+                  请告诉我您的名字。
                 </p>
               </div>
 
@@ -794,6 +792,7 @@ export default function InterviewPage() {
                 />
               </label>
 
+<<<<<<< Updated upstream
               <label className="block">
                 <span className="sr-only">您的年龄</span>
                 <input
@@ -807,6 +806,8 @@ export default function InterviewPage() {
                 />
               </label>
 
+=======
+>>>>>>> Stashed changes
               <button
                 type="submit"
                 disabled={creatingSession}
