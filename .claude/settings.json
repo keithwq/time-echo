@@ -106,7 +106,9 @@
       "Bash(git commit -m 'refactor: 统一术语和改造首页 UI *)",
       "Bash(git commit -m 'refactor: 统一术语和改造首页UI *)",
       "Bash(git checkout *)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "\\tmp",

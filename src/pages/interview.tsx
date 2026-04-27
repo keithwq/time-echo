@@ -249,15 +249,8 @@ export default function InterviewPage() {
         }
 
         if (isActive) {
-          const storedUserId = getStoredInterviewUserId(localStorage);
-          if (storedUserId) {
-            console.log('[INIT] 用户已登录，显示个人信息页面');
-            setUserId(storedUserId);
-            setShowProfileCapture(true);
-          } else {
-            console.log('[INIT] 用户未登录，重定向到首页');
-            await router.replace('/');
-          }
+          console.log('[INIT] 显示名字捕获界面');
+          setShowNameCapture(true);
         }
       } catch (error) {
         console.error('[INIT] Error:', error);
