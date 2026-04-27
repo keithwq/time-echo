@@ -1,75 +1,60 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcrypt';
 import { prisma } from '@/lib/prisma';
+import crypto from 'crypto';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { username, password, real_name, age } = req.body;
+  const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({
-      success: false,
-      error: '用户名和密码不能为空'
-    });
+    return res.status(400).json({ error: '用户名和密码不能为空' });
   }
 
   if (username.length < 3) {
-    return res.status(400).json({
-      success: false,
-      error: '用户名至少3位'
-    });
+    return res.status(400).json({ error: '用户名至少需要 3 个字符' });
   }
 
   if (password.length < 6) {
-    return res.status(400).json({
-      success: false,
-      error: '密码至少6位'
-    });
+    return res.status(400).json({ error: '密码至少需要 6 个字符' });
   }
 
   try {
-    const existing = await prisma.user.findUnique({
-      where: { username }
+    const existingUser = await prisma.user.findUnique({
+      where: { username },
     });
 
-    if (existing) {
-      return res.status(409).json({
-        success: false,
-        error: '用户名已被使用'
-      });
+    if (existingUser) {
+      return res.status(400).json({ error: '用户名已存在' });
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
+    const now = new Date();
+    const activeDeadline = new Date(now.getTime() + 190 * 24 * 60 * 60 * 1000);
 
     const user = await prisma.user.create({
       data: {
         username,
         passwordHash,
-        real_name: real_name || null,
-        age: age ? parseInt(age) : null,
+        real_name: username,
         ink_balance: 50,
-        role: 'USER',
-        active_deadline: new Date(Date.now() + 190 * 24 * 60 * 60 * 1000),
-        protection_end: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000),
-        destruction_date: new Date(Date.now() + 190 * 24 * 60 * 60 * 1000)
-      }
+        active_deadline: activeDeadline,
+        protection_end: activeDeadline,
+        destruction_date: activeDeadline,
+      },
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
-      userId: user.id
+      data: {
+        id: user.id,
+        username: user.username,
+      },
     });
   } catch (error) {
-    console.error('Registration error:', error);
-    return res.status(500).json({
-      success: false,
-      error: 'Internal server error'
-    });
+    console.error('[REGISTER] Error:', error);
+    res.status(500).json({ error: '注册失败' });
   }
 }
