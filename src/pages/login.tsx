@@ -32,6 +32,21 @@ export default function LoginPage() {
     setDialog({ isOpen: true, type, message });
   }
 
+  async function startInterviewForUser(currentUserId: string) {
+    const response = await fetch('/api/interview/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: currentUserId }),
+    });
+
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || '启动访谈失败');
+    }
+
+    return result.data.sessionId as string;
+  }
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
 
@@ -68,13 +83,23 @@ export default function LoginPage() {
     }
   }
 
-  function handleContinue() {
+  async function handleContinue() {
     if (!progressInfo) return;
-    persistInterviewIdentity(localStorage, {
-      userId: progressInfo.userId,
-      sessionId: progressInfo.sessionId,
-    });
-    router.push('/interview');
+
+    setLoading(true);
+
+    try {
+      const currentSessionId = progressInfo.sessionId || await startInterviewForUser(progressInfo.userId);
+      persistInterviewIdentity(localStorage, {
+        userId: progressInfo.userId,
+        sessionId: currentSessionId,
+      });
+      await router.push('/interview');
+    } catch (error) {
+      openDialog(error instanceof Error ? error.message : '启动访谈失败', 'error');
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (progressInfo) {
@@ -87,7 +112,9 @@ export default function LoginPage() {
         <main className="flex-1 px-6 py-8 flex items-center justify-center">
           <div className="w-full max-w-xl space-y-6">
             <div className="space-y-3">
-              <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">您的进度</h2>
+              <h2 className="text-2xl font-serif text-ink-heavy leading-relaxed">
+                {progressInfo.sessionId ? '您的进度' : '欢迎回来'}
+              </h2>
             </div>
 
             <div className="bg-paper-deep border-l-4 border-seal-red p-6 space-y-4">
@@ -104,14 +131,25 @@ export default function LoginPage() {
                   <p className="text-lg text-ink-heavy font-serif">{progressInfo.progress}</p>
                 </div>
               )}
+
+              {!progressInfo.sessionId && (
+                <p className="text-lg text-ink-heavy font-serif leading-loose">
+                  您的账号已经准备好了，现在可以开始记录故事。
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col gap-3">
               <button
                 onClick={handleContinue}
+                disabled={loading}
                 className="w-full min-h-[56px] bg-seal-red text-paper-base text-lg font-serif tracking-widest rounded-sm transition-colors active:bg-opacity-80"
               >
-                继续我的故事
+                {loading
+                  ? '准备中...'
+                  : progressInfo.sessionId
+                    ? '继续我的故事'
+                    : '开始我的故事'}
               </button>
 
               <button
@@ -208,4 +246,3 @@ export default function LoginPage() {
     </>
   );
 }
-

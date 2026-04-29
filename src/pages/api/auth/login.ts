@@ -16,11 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const user = await prisma.user.findUnique({
       where: { username },
-      include: {
-        interviewSessions: {
-          orderBy: { startedAt: 'desc' },
-          take: 1,
-        },
+      select: {
+        id: true,
+        passwordHash: true,
       },
     });
 
@@ -33,7 +31,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ error: '用户名或密码错误' });
     }
 
-    const lastSession = user.interviewSessions[0];
+    const lastSession = await prisma.interviewSession.findFirst({
+      where: { userId: user.id },
+      orderBy: { startedAt: 'desc' },
+      select: {
+        id: true,
+        baseSlotsUsed: true,
+        updatedAt: true,
+      },
+    });
+
     let sessionId = lastSession?.id || '';
     let progress = '';
     let lastActivityTime = '';

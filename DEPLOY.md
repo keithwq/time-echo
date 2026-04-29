@@ -185,9 +185,16 @@ docker build -t your-dockerhub-username/time-echo:v1.1.0 .
 # 2. 推送镜像
 docker push your-dockerhub-username/time-echo:v1.1.0
 
-# 3. 在 Sealos 控制台更新镜像版本
+# 3. 更新镜像前，先在 Sealos 控制台备份 PostgreSQL
+# 备份完成后，在根目录 D:\Project\time_echo 执行数据库结构同步：
+npx prisma db push
+
+# 4. 在 Sealos 控制台更新镜像版本
 # 进入应用详情 → 编辑 → 修改镜像标签 → 保存
 ```
+
+> 线上数据库是唯一生产数据源。执行 `npx prisma db push` 前必须先完成 Sealos
+> PostgreSQL 备份；不要使用 `--accept-data-loss`，确保本步骤只做加字段、加索引等非破坏性同步。
 
 ## 安全建议
 
