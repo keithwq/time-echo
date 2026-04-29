@@ -1,0 +1,84 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e7] [cursor=pointer]:
+      - generic [ref=e9]:
+        - img [ref=e10]
+        - paragraph [ref=e13]: 在线客服
+      - img [ref=e15]
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - img "Logo" [ref=e23]
+        - generic [ref=e26] [cursor=pointer]:
+          - paragraph [ref=e27]: Singapore
+          - img [ref=e29]
+        - img [ref=e32]
+        - generic [ref=e34] [cursor=pointer]:
+          - img [ref=e36]
+          - paragraph [ref=e41]: My Workspace
+          - img [ref=e43]
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - generic [ref=e48] [cursor=pointer]:
+            - generic [ref=e50]: 余额
+            - separator [ref=e51]
+            - img [ref=e53]
+            - paragraph [ref=e63]: "2.21"
+          - generic [ref=e64] [cursor=pointer]: 引导
+          - generic [ref=e65] [cursor=pointer]: 文档
+          - generic [ref=e66] [cursor=pointer]: 工单
+        - img [ref=e69] [cursor=pointer]
+        - button "user avator" [ref=e72]:
+          - generic:
+            - generic:
+              - img "user avator"
+    - generic [ref=e75]:
+      - img
+      - generic [ref=e76]:
+        - generic [ref=e78] [cursor=pointer]:
+          - img [ref=e80]
+          - paragraph [ref=e84]: 不知道从哪里开始？查看指南了解主要功能。
+          - img [ref=e86]
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e93] [cursor=pointer]:
+              - img "app logo"
+            - paragraph [ref=e94]: 应用商店
+          - generic [ref=e95]:
+            - generic [ref=e96] [cursor=pointer]:
+              - img "app logo"
+            - paragraph [ref=e97]: 数据库
+          - generic [ref=e98]:
+            - generic [ref=e99] [cursor=pointer]:
+              - img "app logo"
+            - paragraph [ref=e100]: 应用管理
+          - generic [ref=e104] [cursor=pointer]:
+            - img "app icon" [ref=e106]
+            - img "app icon" [ref=e108]
+            - img "app icon" [ref=e110]
+            - img "app icon" [ref=e112]
+    - generic [ref=e113]:
+      - img [ref=e115] [cursor=pointer]
+      - generic [ref=e117]:
+        - img "home" [ref=e120] [cursor=pointer]
+        - img "App Store" [ref=e124] [cursor=pointer]
+        - img "Database" [ref=e128] [cursor=pointer]
+        - img "App Launchpad" [ref=e132] [cursor=pointer]
+    - generic [ref=e135]:
+      - generic [ref=e136] [cursor=pointer]:
+        - generic [ref=e137]:
+          - img "App Launchpad" [ref=e138]
+          - generic [ref=e139]: 应用管理
+        - generic [ref=e140]:
+          - img "App Launchpad" [ref=e142]
+          - img "App Launchpad" [ref=e144]
+          - img "App Launchpad" [ref=e146]
+      - iframe [ref=e148]:
+        
+  - alert [ref=e134]
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

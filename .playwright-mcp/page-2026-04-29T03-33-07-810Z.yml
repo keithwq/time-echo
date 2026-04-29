@@ -1,0 +1,34 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e52]:
+    - img "signin-bg" [ref=e53]
+    - generic [ref=e54]:
+      - generic [ref=e56] [cursor=pointer]: 中
+      - generic [ref=e59]:
+        - img [ref=e61]
+        - paragraph [ref=e65]: 请输入6位验证码
+        - paragraph [ref=e66]: 已发送验证码到 13032531078
+        - group [ref=e67]:
+          - textbox "Please enter your pin code" [ref=e68]:
+            - /placeholder: ""
+          - textbox "Please enter your pin code" [ref=e69]:
+            - /placeholder: ""
+          - textbox "Please enter your pin code" [ref=e70]:
+            - /placeholder: ""
+          - textbox "Please enter your pin code" [ref=e71]:
+            - /placeholder: ""
+          - textbox "Please enter your pin code" [ref=e72]:
+            - /placeholder: ""
+          - textbox "Please enter your pin code" [ref=e73]:
+            - /placeholder: ""
+        - paragraph [ref=e76]: 58s 后可重新发送验证码
+        - button "返回" [ref=e78]:
+          - img [ref=e80]
+          - text: 返回
+  - alert [ref=e41]: /phoneCheck
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

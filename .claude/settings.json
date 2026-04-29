@@ -108,11 +108,13 @@
       "Bash(git checkout *)",
       "WebFetch(domain:github.com)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Read(//d/d/Project/**)"
     ],
     "additionalDirectories": [
       "\\tmp",
-      "C:\\Users\\K\\.claude\\plans"
+      "C:\\Users\\K\\.claude\\plans",
+      "d:\\DB\\20_PROJECTS\\time_echo\\src\\pages\\api\\users"
     ]
   }
 }
